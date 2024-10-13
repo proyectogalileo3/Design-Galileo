@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AvatarAlumno extends StatelessWidget {
   final Function(String) onAvatarAlumno;
 
-  AvatarAlumno({required this.onAvatarAlumno});
+  const AvatarAlumno({super.key, required this.onAvatarAlumno});
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +17,19 @@ class AvatarAlumno extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Text(
               'Selector Avatar alumno',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
-          Container(
+          SizedBox(
             height: screenHeight * 0.4,
             width: screenWidth * 0.8,
             child: GridView.builder(
-              padding: EdgeInsets.all(16),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              padding: const EdgeInsets.all(16),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
@@ -52,7 +52,7 @@ class AvatarAlumno extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cerrar'),
+              child: const Text('Cerrar'),
             ),
           ),
         ],

@@ -1,7 +1,7 @@
 name: design_galileo
 description: "A new Flutter project."
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none' 
 
 version: 1.0.0+1
 
@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # Utilizad este espacio para agregar las dependencias de Rive o cualquier otra que utilicéis
   cupertino_icons: ^1.0.6
 
 dev_dependencies:
@@ -20,7 +21,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
+  # Aquí para las utilidades o assets que se agregen, animaciones, etc.
   assets:
     - assets/images/avataralumnos/
     - assets/images/galileo/

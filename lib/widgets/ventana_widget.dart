@@ -7,7 +7,8 @@ class VentanaWidget extends StatelessWidget {
   final Color colorFondo;
   final List<Widget> acciones;
 
-  VentanaWidget({
+  const VentanaWidget({
+    super.key,
     required this.titulo,
     required this.contenido,
     required this.icono,
@@ -18,7 +19,7 @@ class VentanaWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: colorFondo,
         borderRadius: BorderRadius.circular(20),
@@ -27,14 +28,14 @@ class VentanaWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icono, size: 50),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
             titulo,
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(contenido, textAlign: TextAlign.center),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: acciones,
