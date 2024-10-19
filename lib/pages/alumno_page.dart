@@ -5,15 +5,16 @@ class AlumnoPage extends StatefulWidget {
   const AlumnoPage({super.key});
 
   @override
-  _AlumnoPageState createState() => _AlumnoPageState();
+  AlumnoPageState createState() => AlumnoPageState();
 }
 
-class _AlumnoPageState extends State<AlumnoPage>
+class AlumnoPageState extends State<AlumnoPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
   bool isDrawerOpen = false;
-  String fullText = 'EXPERIMENTOS:\n\nAquí puedes ver tus experimentos asignados';
+  String fullText =
+      'EXPERIMENTOS:\n\nAquí puedes ver tus experimentos asignados';
   String displayedText = '';
   int currentIndex = 0;
   bool showButton = true;
@@ -66,7 +67,8 @@ class _AlumnoPageState extends State<AlumnoPage>
       Future.delayed(const Duration(milliseconds: 50), _writeNextLetter);
     } else {
       setState(() {
-        showActionButton = true; // Muestra el botón "Ver Experimentos" al finalizar la escritura
+        showActionButton =
+            true; // Muestra el botón "Ver Experimentos" al finalizar la escritura
       });
     }
   }
@@ -118,38 +120,40 @@ class _AlumnoPageState extends State<AlumnoPage>
                       children: [
                         // Contenido superpuesto en la pizarra
                         Positioned(
-                          top: 120,
-                          left: 430,
-                          child: Container(
-                            width: 430,
+                          top: 200,
+                          left: 0,
+                          child: SizedBox(
+                            width: 400,
                             height: 250,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   displayedText,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 22,
                                     fontWeight: FontWeight.bold,
-                                    fontFamily: 'ChalkFont', // Usa la fuente personalizada
+                                    fontFamily:
+                                        'ChalkFont', // Usa la fuente personalizada
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                                SizedBox(height: 30),
+                                const SizedBox(height: 30),
                                 // Botón "Ver Experimentos" que aparece al final de la animación
                                 if (showActionButton)
                                   TextButton(
                                     onPressed: () {
                                       // Acción para ver experimentos
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       'Ver Experimentos',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
-                                        fontFamily: 'ChalkFont', // Usa la fuente personalizada
+                                        fontFamily:
+                                            'ChalkFont', // Usa la fuente personalizada
                                       ),
                                     ),
                                   ),
@@ -160,11 +164,11 @@ class _AlumnoPageState extends State<AlumnoPage>
                         // Botón para iniciar la escritura letra por letra
                         if (showButton)
                           Positioned(
-                            bottom: 50,
-                            left: 400,
+                            top: 40,
+                            left: 85,
                             child: ElevatedButton(
                               onPressed: _startWritingText,
-                              child: Text(
+                              child: const Text(
                                 'Mostrar Experimentos',
                                 style: TextStyle(fontSize: 20),
                               ),
@@ -173,7 +177,7 @@ class _AlumnoPageState extends State<AlumnoPage>
                         // Añadir imagen en la esquina inferior derecha
                         Positioned(
                           bottom: 20,
-                          right: 20,
+                          left: 20,
                           child: Image.asset(
                             'assets/images/galileo/galileo11.png', // Ruta de la imagen añadida
                             width: 500, // Ajusta el tamaño según necesites
