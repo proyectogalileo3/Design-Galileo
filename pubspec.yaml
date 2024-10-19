@@ -25,7 +25,6 @@ flutter:
   assets:
     - assets/images/avataralumnos/
     - assets/images/galileo/
-    - assets/icons/
   fonts:
     - family: ChalkFont
       fonts:
