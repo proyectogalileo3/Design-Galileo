@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   # Utilizad este espacio para agregar las dependencias de Rive o cualquier otra que utilicéis
+  rive: ^0.13.14
   cupertino_icons: ^1.0.6
 
 dev_dependencies:

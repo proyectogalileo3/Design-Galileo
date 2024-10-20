@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:design_galileo/widgets/side_menu_alumno.dart';
+import 'package:flutter/services.dart';
+import 'dart:async';
+import 'package:rive/rive.dart' hide Image;
 
 class AlumnoPage extends StatefulWidget {
   const AlumnoPage({super.key});
@@ -20,9 +23,30 @@ class AlumnoPageState extends State<AlumnoPage>
   bool showButton = true;
   bool showActionButton = false;
 
+  SMIBool? isWalking;
+  Artboard? _riveArtboard;
+  double characterX = 500.0;
+
   @override
   void initState() {
     super.initState();
+
+    rootBundle.load('assets/images/galileo/galileo.riv').then((data) async {
+      await RiveFile.initialize();
+      final file = RiveFile.import(data);
+      final artboard = file.mainArtboard;
+
+      final controller =
+          StateMachineController.fromArtboard(artboard, 'State Machine 1');
+
+      if (controller != null) {
+        artboard.addController(controller);
+        isWalking = controller.findInput<bool>('isWalking') as SMIBool?;
+      }
+
+      setState(() => _riveArtboard = artboard);
+    });
+
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
@@ -35,6 +59,34 @@ class AlumnoPageState extends State<AlumnoPage>
       parent: _controller,
       curve: Curves.easeInOut,
     ));
+  }
+
+  void _toggleWalking() {
+    if (isWalking != null) {
+      setState(() {
+        isWalking!.value = !isWalking!.value;
+      });
+    }
+  }
+
+  void _startWalking() {
+    _toggleWalking();
+
+    if (isWalking != null && isWalking!.value) {
+      Timer.periodic(const Duration(milliseconds: 16), (timer) {
+        setState(() {
+          if (characterX <= 40.0) {
+            timer.cancel();
+            _toggleWalking();
+          }
+          characterX -= 2;
+        });
+
+        if (isWalking != null && !isWalking!.value) {
+          timer.cancel();
+        }
+      });
+    }
   }
 
   void _toggleDrawer() {
@@ -142,9 +194,10 @@ class AlumnoPageState extends State<AlumnoPage>
                                 const SizedBox(height: 30),
                                 // Botón "Ver Experimentos" que aparece al final de la animación
                                 if (showActionButton)
-                                  TextButton(
+                                  OutlinedButton(
                                     onPressed: () {
                                       // Acción para ver experimentos
+                                      _startWalking();
                                     },
                                     child: const Text(
                                       'Ver Experimentos',
@@ -163,9 +216,8 @@ class AlumnoPageState extends State<AlumnoPage>
                         ),
                         // Botón para iniciar la escritura letra por letra
                         if (showButton)
-                          Positioned(
-                            top: 40,
-                            left: 85,
+                          Align(
+                            alignment: const Alignment(0.0, -0.77),
                             child: ElevatedButton(
                               onPressed: _startWritingText,
                               child: const Text(
@@ -176,15 +228,27 @@ class AlumnoPageState extends State<AlumnoPage>
                           ),
                         // Añadir imagen en la esquina inferior derecha
                         Positioned(
-                          bottom: 20,
-                          left: 20,
-                          child: Image.asset(
-                            'assets/images/galileo/galileo11.png', // Ruta de la imagen añadida
-                            width: 500, // Ajusta el tamaño según necesites
-                            height: 500,
-                            fit: BoxFit.contain,
-                          ),
+                          bottom: 0,
+                          left: characterX,
+                          child: _riveArtboard == null
+                              ? const SizedBox()
+                              : SizedBox(
+                                  height: 500,
+                                  width: 500,
+                                  child: Rive(
+                                    artboard: _riveArtboard!,
+                                  ),
+                                ),
                         ),
+                        // Positioned(
+                        //   bottom: 20,
+                        //   left: 20,
+                        //   child: ElevatedButton(
+                        //     // onPressed: () {},
+                        //     onPressed: _startWalking,
+                        //     child: const Text('Caminar'),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
