@@ -98,7 +98,7 @@ class AlumnoPageState extends State<AlumnoPage>
                 // Fondo de pantalla (laboratorio actualizado)
                 Positioned.fill(
                   child: Image.asset(
-                    'assets/images/galileo/nuevolaboratorio.png', // Cambiar por el nuevo fondo
+                    'assets/images/galileo/Aula_infantil.png', // Cambiar por el nuevo fondo
                     fit: BoxFit.cover,
                   ),
                 ),
