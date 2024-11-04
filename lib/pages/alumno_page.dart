@@ -85,6 +85,10 @@ class AlumnoPageState extends State<AlumnoPage>
 
   @override
   Widget build(BuildContext context) {
+    // Obtenemos el tamaño de la pantalla
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -124,19 +128,21 @@ class AlumnoPageState extends State<AlumnoPage>
                       children: [
                         // Contenido superpuesto en la pizarra
                         Positioned(
-                          top: 200,
-                          left: 0,
+                          top: screenSize.height * 0.1, // Ajuste para subir el texto
+                          left: screenSize.width * 0.1,
+                          right: screenSize.width * 0.1,
                           child: SizedBox(
-                            width: 400,
-                            height: 250,
+                            width: screenSize.width * 0.8,
+                            height: screenSize.height * 0.3,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
                                   displayedText,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 22,
+                                    fontSize: isSmallScreen ? 18 : 22,
                                     fontWeight: FontWeight.bold,
                                     fontFamily:
                                         'ChalkFont', // Usa la fuente personalizada
@@ -146,18 +152,20 @@ class AlumnoPageState extends State<AlumnoPage>
                                 const SizedBox(height: 30),
                                 // Botón "Ver Experimentos" que aparece al final de la animación
                                 if (showActionButton)
-                                  OutlinedButton(
-                                    onPressed: () {
-                                      // Acción para ver experimentos
-                                    },
-                                    child: const Text(
-                                      'Ver Experimentos',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily:
-                                            'ChalkFont', // Usa la fuente personalizada
+                                  Center(
+                                    child: OutlinedButton(
+                                      onPressed: () {
+                                        // Acción para ver experimentos
+                                      },
+                                      child: Text(
+                                        'Ver Experimentos',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: isSmallScreen ? 16 : 20,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily:
+                                              'ChalkFont', // Usa la fuente personalizada
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -171,9 +179,11 @@ class AlumnoPageState extends State<AlumnoPage>
                             alignment: const Alignment(0.0, -0.77),
                             child: ElevatedButton(
                               onPressed: _startWritingText,
-                              child: const Text(
+                              child: Text(
                                 'Mostrar Experimentos',
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(
+                                  fontSize: isSmallScreen ? 16 : 20,
+                                ),
                               ),
                             ),
                           ),
