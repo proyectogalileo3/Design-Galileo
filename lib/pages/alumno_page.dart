@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:design_galileo/widgets/side_menu_alumno.dart';
-import 'package:design_galileo/widgets/galileo_character.dart';
 
 class AlumnoPage extends StatefulWidget {
   const AlumnoPage({super.key});
@@ -19,9 +18,11 @@ class AlumnoPageState extends State<AlumnoPage>
   String fullText =
       'EXPERIMENTOS:\n\nAquí puedes ver tus experimentos asignados';
   String displayedText = '';
+  String currentText = '';
   int currentIndex = 0;
   bool showButton = true;
-  bool showActionButton = false;
+  bool showExperimentButtons =
+      false; // Variable para mostrar los botones de experimentos
 
   @override
   void initState() {
@@ -53,26 +54,32 @@ class AlumnoPageState extends State<AlumnoPage>
   }
 
   // Método para escribir letra por letra
-  void _startWritingText() {
+  void _startWritingText(String text) {
     setState(() {
-      showButton = false; // Oculta el botón al iniciar la animación
+      showButton = false;
+      currentText = text;
+      displayedText = '';
+      currentIndex = 0;
+      showExperimentButtons =
+          false; // Asegúrate de ocultar los botones de experimentos al iniciar
     });
 
     Future.delayed(const Duration(milliseconds: 100), _writeNextLetter);
   }
 
+  // Método modificado para escribir el texto pasado por parámetro
   void _writeNextLetter() {
-    if (currentIndex < fullText.length) {
+    if (currentIndex < currentText.length) {
       setState(() {
-        displayedText += fullText[currentIndex];
+        displayedText += currentText[currentIndex];
         currentIndex++;
       });
 
-      Future.delayed(const Duration(milliseconds: 50), _writeNextLetter);
+      Future.delayed(const Duration(milliseconds: 20), _writeNextLetter);
     } else {
+      // Cuando se termina de escribir, mostrar los botones de experimentos
       setState(() {
-        showActionButton =
-            true; // Muestra el botón "Ver Experimentos" al finalizar la escritura
+        showExperimentButtons = true;
       });
     }
   }
@@ -85,6 +92,10 @@ class AlumnoPageState extends State<AlumnoPage>
 
   @override
   Widget build(BuildContext context) {
+    // Obtenemos el tamaño de la pantalla
+    final screenSize = MediaQuery.of(context).size;
+    final isSmallScreen = screenSize.width < 600;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -124,43 +135,28 @@ class AlumnoPageState extends State<AlumnoPage>
                       children: [
                         // Contenido superpuesto en la pizarra
                         Positioned(
-                          top: 200,
-                          left: 0,
+                          top: screenSize.height *
+                              0.1, // Ajuste para subir el texto
+                          left: screenSize.width * 0.1,
+                          right: screenSize.width * 0.1,
                           child: SizedBox(
-                            width: 400,
-                            height: 250,
+                            width: screenSize.width * 0.8,
+                            height: screenSize.height * 0.3,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
                                   displayedText,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 22,
+                                    fontSize: isSmallScreen ? 18 : 22,
                                     fontWeight: FontWeight.bold,
                                     fontFamily:
                                         'ChalkFont', // Usa la fuente personalizada
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                                const SizedBox(height: 30),
-                                // Botón "Ver Experimentos" que aparece al final de la animación
-                                if (showActionButton)
-                                  OutlinedButton(
-                                    onPressed: () {
-                                      // Acción para ver experimentos
-                                    },
-                                    child: const Text(
-                                      'Ver Experimentos',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily:
-                                            'ChalkFont', // Usa la fuente personalizada
-                                      ),
-                                    ),
-                                  ),
                               ],
                             ),
                           ),
@@ -170,17 +166,90 @@ class AlumnoPageState extends State<AlumnoPage>
                           Align(
                             alignment: const Alignment(0.0, -0.77),
                             child: ElevatedButton(
-                              onPressed: _startWritingText,
-                              child: const Text(
+                              onPressed: () {
+                                _startWritingText(fullText);
+                              },
+                              child: Text(
                                 'Mostrar Experimentos',
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(
+                                  fontSize: isSmallScreen ? 16 : 20,
+                                ),
                               ),
                             ),
                           ),
-                        const GalileoCharacter(
-                          posX: 0,
-                          posY: 0,
-                        ),
+                        // Botones de experimentos que aparecen después de mostrar el texto
+                        if (showExperimentButtons) ...[
+                          Positioned(
+                            top: 350,
+                            right: 205,
+                            child: Opacity(
+                              opacity: 1.0,
+                              child: Transform.translate(
+                                offset: const Offset(0, -50),
+                                child: SizedBox(
+                                  height: 150,
+                                  width: 50,
+                                  child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.zero)),
+                                      onPressed: () {
+                                        _startWritingText(
+                                            'EXPERIMENTO #1\n\nEste es el experimento número 1.');
+                                      },
+                                      child: const Text('')),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 340,
+                            left: 330,
+                            child: Opacity(
+                              opacity: 1.0,
+                              child: Transform.translate(
+                                offset: const Offset(0, -50),
+                                child: SizedBox(
+                                  height: 140,
+                                  width: 100,
+                                  child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.zero)),
+                                      onPressed: () {
+                                        _startWritingText(
+                                            'EXPERIMENTO #2\n\nEste es el experimento número 2.');
+                                      },
+                                      child: const Text('')),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 5,
+                            right: 240,
+                            child: Opacity(
+                              opacity: 1.0,
+                              child: Transform.translate(
+                                offset: const Offset(0, -50),
+                                child: SizedBox(
+                                  height: 200,
+                                  width: 200,
+                                  child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(200))),
+                                      onPressed: () {
+                                        _startWritingText(
+                                            'EXPERIMENTO #3\n\nEste es el experimento número 3.');
+                                      },
+                                      child: const Text('')),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),
