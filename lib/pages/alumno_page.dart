@@ -14,6 +14,7 @@ class AlumnoPageState extends State<AlumnoPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
+  bool isHovered = false;
   bool isDrawerOpen = false;
   String fullText =
       'EXPERIMENTOS:\n\nAquí puedes ver tus experimentos asignados';
@@ -157,20 +158,28 @@ class AlumnoPageState extends State<AlumnoPage>
                 ),
                 // Botón para iniciar la escritura letra por letra
                 if (showButton)
-                  Align(
-                    alignment: const Alignment(0.0, -0.77),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _startWritingText(fullText);
-                      },
-                      child: Text(
-                        'Mostrar Experimentos',
-                        style: TextStyle(
-                          fontSize: isSmallScreen ? 16 : 20,
+                Align(
+                  alignment: const Alignment(0.0, -0.77),
+                  child: MouseRegion(
+                    onEnter: (_) => setState(() => isHovered = true),
+                    onExit: (_) => setState(() => isHovered = false),
+                    child: AnimatedScale(
+                      scale: isHovered ? 1.1 : 1.0, // Cambia el tamaño cuando el cursor está encima
+                      duration: const Duration(milliseconds: 200),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _startWritingText(fullText);
+                        },
+                        child: Text(
+                          'Mostrar Experimentos',
+                          style: TextStyle(
+                            fontSize: isSmallScreen ? 16 : 20,
+                          ),
                         ),
                       ),
                     ),
                   ),
+                ),
                 // Botones de experimentos que aparecen después de mostrar el texto
                 if (showExperimentButtons) ...[
                   Positioned(
