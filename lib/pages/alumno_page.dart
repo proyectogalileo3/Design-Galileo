@@ -1,3 +1,4 @@
+import 'package:design_galileo/widgets/galileo_character.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -24,6 +25,9 @@ class AlumnoPageState extends State<AlumnoPage>
   bool showButton = true;
   bool showExperimentButtons =
       false; // Variable para mostrar los botones de experimentos
+
+  final GlobalKey<GalileoCharacterState> galileoKey =
+      GlobalKey<GalileoCharacterState>();
 
   @override
   void initState() {
@@ -158,28 +162,30 @@ class AlumnoPageState extends State<AlumnoPage>
                 ),
                 // Botón para iniciar la escritura letra por letra
                 if (showButton)
-                Align(
-                  alignment: const Alignment(0.0, -0.77),
-                  child: MouseRegion(
-                    onEnter: (_) => setState(() => isHovered = true),
-                    onExit: (_) => setState(() => isHovered = false),
-                    child: AnimatedScale(
-                      scale: isHovered ? 1.1 : 1.0, // Cambia el tamaño cuando el cursor está encima
-                      duration: const Duration(milliseconds: 200),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          _startWritingText(fullText);
-                        },
-                        child: Text(
-                          'Mostrar Experimentos',
-                          style: TextStyle(
-                            fontSize: isSmallScreen ? 16 : 20,
+                  Align(
+                    alignment: const Alignment(0.0, -0.77),
+                    child: MouseRegion(
+                      onEnter: (_) => setState(() => isHovered = true),
+                      onExit: (_) => setState(() => isHovered = false),
+                      child: AnimatedScale(
+                        scale: isHovered
+                            ? 1.1
+                            : 1.0, // Cambia el tamaño cuando el cursor está encima
+                        duration: const Duration(milliseconds: 200),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _startWritingText(fullText);
+                          },
+                          child: Text(
+                            'Mostrar Experimentos',
+                            style: TextStyle(
+                              fontSize: isSmallScreen ? 16 : 20,
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
                 // Botones de experimentos que aparecen después de mostrar el texto
                 if (showExperimentButtons) ...[
                   Positioned(
@@ -188,7 +194,7 @@ class AlumnoPageState extends State<AlumnoPage>
                     child: Opacity(
                       opacity: 1.0,
                       child: Transform.translate(
-                        offset: const Offset(0, -50),
+                        offset: const Offset(0, 0),
                         child: SizedBox(
                           height: 150,
                           width: 50,
@@ -211,7 +217,7 @@ class AlumnoPageState extends State<AlumnoPage>
                     child: Opacity(
                       opacity: 1.0,
                       child: Transform.translate(
-                        offset: const Offset(0, -50),
+                        offset: const Offset(0, 0),
                         child: SizedBox(
                           height: 140,
                           width: 100,
@@ -234,7 +240,7 @@ class AlumnoPageState extends State<AlumnoPage>
                     child: Opacity(
                       opacity: 1.0,
                       child: Transform.translate(
-                        offset: const Offset(0, -50),
+                        offset: const Offset(0, 0),
                         child: SizedBox(
                           height: 200,
                           width: 200,
@@ -253,6 +259,18 @@ class AlumnoPageState extends State<AlumnoPage>
                     ),
                   ),
                 ],
+                GalileoCharacter(
+                  key: galileoKey,
+                  posX: 1000.0,
+                  posY: 0,
+                ),
+                Positioned(
+                  bottom: screenSize.height * 0.05,
+                  left: screenSize.width * 0.05,
+                  child: ElevatedButton(
+                      onPressed: galileoKey.currentState?.startWalking,
+                      child: const Text('Caminar')),
+                )
               ],
             ),
           ),

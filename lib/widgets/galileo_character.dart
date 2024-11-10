@@ -46,24 +46,27 @@ class GalileoCharacterState extends State<GalileoCharacter> {
     setState(() {});
   }
 
-  // void _startWalking() {
-  //   _galileoCharacterController.toggleWalking();
+  void startWalking() {
+    if (posX <= 0.0) {
+      return;
+    }
+    _galileoCharacterController.toggleWalking();
 
-  //   Timer.periodic(const Duration(milliseconds: 16), (timer) {
-  //     setState(() {
-  //       if (characterX <= 40.0) {
-  //         timer.cancel();
-  //         _galileoCharacterController.toggleWalking();
-  //       }
-  //       characterX -= 2;
-  //     });
+    Timer.periodic(const Duration(milliseconds: 16), (timer) {
+      setState(() {
+        if (posX <= 0.0) {
+          timer.cancel();
+          _galileoCharacterController.toggleWalking();
+        }
+        posX -= 2.0;
+      });
 
-  //     if (_galileoCharacterController.isWalking != null &&
-  //         !_galileoCharacterController.isWalking!.value) {
-  //       timer.cancel();
-  //     }
-  //   });
-  // }
+      if (_galileoCharacterController.isWalking != null &&
+          !_galileoCharacterController.isWalking!.value) {
+        timer.cancel();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
