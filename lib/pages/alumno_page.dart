@@ -12,7 +12,7 @@ class AlumnoPage extends StatefulWidget {
 }
 
 class AlumnoPageState extends State<AlumnoPage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
   bool isHovered = false;
@@ -23,11 +23,15 @@ class AlumnoPageState extends State<AlumnoPage>
   String currentText = '';
   int currentIndex = 0;
   bool showButton = true;
-  bool showExperimentButtons =
-      false; // Variable para mostrar los botones de experimentos
+  bool showExperimentButtons = false;
+  int currentExperiment = 1; // Variable para controlar el experimento actual
 
   final GlobalKey<GalileoCharacterState> galileoKey =
       GlobalKey<GalileoCharacterState>();
+
+  // Animación para la mano
+  late AnimationController _handScaleController;
+  late Animation<double> _handScaleAnimation;
 
   @override
   void initState() {
@@ -45,6 +49,24 @@ class AlumnoPageState extends State<AlumnoPage>
       parent: _controller,
       curve: Curves.easeInOut,
     ));
+
+    // Inicializar la animación de la mano
+    _handScaleController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+
+    _handScaleAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
+      CurvedAnimation(parent: _handScaleController, curve: Curves.easeInOut),
+    );
+  }
+
+  void _startHandScaleAnimation() {
+    _handScaleController.repeat(reverse: true);
+  }
+
+  void _stopHandScaleAnimation() {
+    _handScaleController.stop();
   }
 
   void _toggleDrawer() {
@@ -65,8 +87,7 @@ class AlumnoPageState extends State<AlumnoPage>
       currentText = text;
       displayedText = '';
       currentIndex = 0;
-      showExperimentButtons =
-          false; // Asegúrate de ocultar los botones de experimentos al iniciar
+      showExperimentButtons = false;
     });
 
     Future.delayed(const Duration(milliseconds: 100), _writeNextLetter);
@@ -86,12 +107,16 @@ class AlumnoPageState extends State<AlumnoPage>
       setState(() {
         showExperimentButtons = true;
       });
+      if (currentExperiment == 1) {
+        _startHandScaleAnimation(); // Iniciar la animación de la mano
+      }
     }
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _handScaleController.dispose(); // Dispose del controlador de la mano
     super.dispose();
   }
 
@@ -188,72 +213,148 @@ class AlumnoPageState extends State<AlumnoPage>
                   ),
                 // Botones de experimentos que aparecen después de mostrar el texto
                 if (showExperimentButtons) ...[
+                  // Experimento #1
                   Positioned(
                     top: 350,
                     right: 205,
-                    child: Opacity(
-                      opacity: 1.0,
-                      child: Transform.translate(
-                        offset: const Offset(0, 0),
-                        child: SizedBox(
-                          height: 150,
-                          width: 50,
-                          child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.zero)),
-                              onPressed: () {
-                                _startWritingText(
-                                    'EXPERIMENTO #1\n\nEste es el experimento número 1.');
-                              },
-                              child: const Text('')),
+                    child: GestureDetector(
+                      onTap: currentExperiment == 1
+                          ? () {
+                              _stopHandScaleAnimation();
+                              _startWritingText(
+                                  'EXPERIMENTO #1\n\nEste es el experimento número 1.');
+                              setState(() {
+                                currentExperiment = 2;
+                              });
+                              _startHandScaleAnimation();
+                            }
+                          : null,
+                      child: SizedBox(
+                        height: 150,
+                        width: 150,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            // Área clicable transparente
+                            Container(
+                              color: Colors.transparent,
+                              height: 150,
+                              width: 150,
+                            ),
+                            // Mostrar la mano si es el experimento actual
+                            if (currentExperiment == 1)
+                              AnimatedBuilder(
+                                animation: _handScaleAnimation,
+                                builder: (context, child) {
+                                  return Transform.scale(
+                                    scale: _handScaleAnimation.value,
+                                    child: child,
+                                  );
+                                },
+                                child: Image.asset(
+                                  'assets/images/galileo/mano.png', // Reemplaza con la ruta correcta de tu mano.png
+                                  width: 150,
+                                  height: 150,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),
                   ),
+                  // Experimento #2
                   Positioned(
                     top: 340,
-                    left: 330,
-                    child: Opacity(
-                      opacity: 1.0,
-                      child: Transform.translate(
-                        offset: const Offset(0, 0),
-                        child: SizedBox(
-                          height: 140,
-                          width: 100,
-                          child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.zero)),
-                              onPressed: () {
-                                _startWritingText(
-                                    'EXPERIMENTO #2\n\nEste es el experimento número 2.');
-                              },
-                              child: const Text('')),
+                    left: 280,
+                    child: GestureDetector(
+                      onTap: currentExperiment == 2
+                          ? () {
+                              _stopHandScaleAnimation();
+                              _startWritingText(
+                                  'EXPERIMENTO #2\n\nEste es el experimento número 2.');
+                              setState(() {
+                                currentExperiment = 3;
+                              });
+                              _startHandScaleAnimation();
+                            }
+                          : null,
+                      child: SizedBox(
+                        height: 140,
+                        width: 150,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            // Área clicable transparente
+                            Container(
+                              color: Colors.transparent,
+                              height: 140,
+                              width: 150,
+                            ),
+                            // Mostrar la mano si es el experimento actual
+                            if (currentExperiment == 2)
+                              AnimatedBuilder(
+                                animation: _handScaleAnimation,
+                                builder: (context, child) {
+                                  return Transform.scale(
+                                    scale: _handScaleAnimation.value,
+                                    child: child,
+                                  );
+                                },
+                                child: Image.asset(
+                                  'assets/images/galileo/mano.png', // Reemplaza con la ruta correcta de tu mano.png
+                                  width: 150,
+                                  height: 150,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),
                   ),
+                  // Experimento #3
                   Positioned(
                     top: 5,
                     right: 240,
-                    child: Opacity(
-                      opacity: 1.0,
-                      child: Transform.translate(
-                        offset: const Offset(0, 0),
-                        child: SizedBox(
-                          height: 200,
-                          width: 200,
-                          child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(200))),
-                              onPressed: () {
-                                _startWritingText(
-                                    'EXPERIMENTO #3\n\nEste es el experimento número 3.');
-                              },
-                              child: const Text('')),
+                    child: GestureDetector(
+                      onTap: currentExperiment == 3
+                          ? () {
+                              _stopHandScaleAnimation();
+                              _startWritingText(
+                                  'EXPERIMENTO #3\n\nEste es el experimento número 3.');
+                              setState(() {
+                                currentExperiment = 4; // No hay más experimentos
+                              });
+                            }
+                          : null,
+                      child: SizedBox(
+                        height: 200,
+                        width: 200,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            // Área clicable transparente
+                            Container(
+                              color: Colors.transparent,
+                              height: 200,
+                              width: 200,
+                            ),
+                            // Mostrar la mano si es el experimento actual
+                            if (currentExperiment == 3)
+                              AnimatedBuilder(
+                                animation: _handScaleAnimation,
+                                builder: (context, child) {
+                                  return Transform.scale(
+                                    scale: _handScaleAnimation.value,
+                                    child: child,
+                                  );
+                                },
+                                child: Image.asset(
+                                  'assets/images/galileo/mano.png', // Reemplaza con la ruta correcta de tu mano.png
+                                  width: 150,
+                                  height: 150,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),
