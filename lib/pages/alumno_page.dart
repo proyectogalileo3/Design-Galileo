@@ -11,8 +11,7 @@ class AlumnoPage extends StatefulWidget {
   AlumnoPageState createState() => AlumnoPageState();
 }
 
-class AlumnoPageState extends State<AlumnoPage>
-    with TickerProviderStateMixin {
+class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
   bool isHovered = false;
@@ -147,7 +146,8 @@ class AlumnoPageState extends State<AlumnoPage>
           // Fondo de pantalla (laboratorio actualizado)
           Positioned.fill(
             child: Image.asset(
-              'assets/images/galileo/Aula_infantil.png', // Cambiar por el nuevo fondo
+              'assets/images/galileo/Aula_primaria.png',
+              // 'assets/images/galileo/Aula_infantil.png', // Fondo infantil
               fit: BoxFit.cover,
             ),
           ),
@@ -160,7 +160,7 @@ class AlumnoPageState extends State<AlumnoPage>
               children: [
                 // Contenido superpuesto en la pizarra
                 Positioned(
-                  top: screenSize.height * 0.1, // Ajuste para subir el texto
+                  top: screenSize.height * 0.35, // Ajuste para subir el texto
                   left: screenSize.width * 0.1,
                   right: screenSize.width * 0.1,
                   child: SizedBox(
@@ -188,7 +188,8 @@ class AlumnoPageState extends State<AlumnoPage>
                 // Botón para iniciar la escritura letra por letra
                 if (showButton)
                   Align(
-                    alignment: const Alignment(0.0, -0.77),
+                    alignment: const Alignment(0.0, 0.0),
+                    // alignment: const Alignment(0.0, -0.77), // Alineamiento aula infantil
                     child: MouseRegion(
                       onEnter: (_) => setState(() => isHovered = true),
                       onExit: (_) => setState(() => isHovered = false),
@@ -322,7 +323,8 @@ class AlumnoPageState extends State<AlumnoPage>
                               _startWritingText(
                                   'EXPERIMENTO #3\n\nEste es el experimento número 3.');
                               setState(() {
-                                currentExperiment = 4; // No hay más experimentos
+                                currentExperiment =
+                                    4; // No hay más experimentos
                               });
                             }
                           : null,
@@ -365,13 +367,13 @@ class AlumnoPageState extends State<AlumnoPage>
                   posX: 1000.0,
                   posY: 0,
                 ),
-                Positioned(
-                  bottom: screenSize.height * 0.05,
-                  left: screenSize.width * 0.05,
-                  child: ElevatedButton(
-                      onPressed: galileoKey.currentState?.startWalking,
-                      child: const Text('Caminar')),
-                )
+                // Positioned(
+                //   bottom: screenSize.height * 0.05,
+                //   left: screenSize.width * 0.05,
+                //   child: ElevatedButton(
+                //       onPressed: galileoKey.currentState?.startWalking,
+                //       child: const Text('Caminar')),
+                // )
               ],
             ),
           ),
