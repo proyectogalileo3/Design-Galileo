@@ -14,6 +14,10 @@ dependencies:
   # Utilizad este espacio para agregar las dependencias de Rive o cualquier otra que utilicéis
   rive: ^0.13.14
   cupertino_icons: ^1.0.6
+  just_audio: ^0.9.30
+  path_provider: ^2.0.11
+  http: ^0.13.4
+  flutter_tts: ^4.1.0
 
 dev_dependencies:
   flutter_test:

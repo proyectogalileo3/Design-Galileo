@@ -1,7 +1,7 @@
 import 'package:design_galileo/widgets/galileo_character.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'dart:async';
-
 import 'package:design_galileo/widgets/side_menu_alumno.dart';
 
 class AlumnoPage extends StatefulWidget {
@@ -14,23 +14,19 @@ class AlumnoPage extends StatefulWidget {
 class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
-  bool isHovered = false;
   bool isDrawerOpen = false;
-  String fullText =
-      'EXPERIMENTOS:\n\nAquí puedes ver tus experimentos asignados';
+  String fullText = 'Hola, soy Galileo. Bienvenido a tu espacio de experimentos.';
+  String experimentsText = 'EXPERIMENTOS:\n\nAquí puedes ver tus experimentos asignados';
+  String instructionText = 'A continuación, cliquea en la pizarra para ver los experimentos.';
   String displayedText = '';
-  String currentText = '';
   int currentIndex = 0;
-  bool showButton = true;
-  bool showExperimentButtons = false;
-  int currentExperiment = 1; // Variable para controlar el experimento actual
+  bool showButton = false;
+  bool showExperimentText = false;
+  bool darkBackground = false;
+  bool isHovered = false; // Control del efecto hover
 
-  final GlobalKey<GalileoCharacterState> galileoKey =
-      GlobalKey<GalileoCharacterState>();
-
-  // Animación para la mano
-  late AnimationController _handScaleController;
-  late Animation<double> _handScaleAnimation;
+  final GlobalKey<GalileoCharacterState> galileoKey = GlobalKey<GalileoCharacterState>();
+  late FlutterTts _flutterTts;
 
   @override
   void initState() {
@@ -49,23 +45,56 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
       curve: Curves.easeInOut,
     ));
 
-    // Inicializar la animación de la mano
-    _handScaleController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
+    _flutterTts = FlutterTts();
+    _flutterTts.setSpeechRate(0.5);
+    _flutterTts.setPitch(0.8); // Grave
+    _flutterTts.setVoice({"name": "es-MX-standard-B", "locale": "es-MX"}); // Masculina y grave
 
-    _handScaleAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
-      CurvedAnimation(parent: _handScaleController, curve: Curves.easeInOut),
-    );
+    _startIntroDialogue();
   }
 
-  void _startHandScaleAnimation() {
-    _handScaleController.repeat(reverse: true);
+  void _startIntroDialogue() {
+    _speakText(fullText); // Hablar el texto antes de mostrarlo letra por letra
+    _startWritingText(fullText);
   }
 
-  void _stopHandScaleAnimation() {
-    _handScaleController.stop();
+  void _speakText(String text) async {
+    await _flutterTts.stop(); // Detener cualquier texto en proceso
+    await _flutterTts.speak(text);
+  }
+
+  void _startWritingText(String text) {
+    setState(() {
+      displayedText = '';
+      currentIndex = 0;
+    });
+    Future.delayed(const Duration(milliseconds: 100), () => _writeNextLetter(text));
+  }
+
+  void _writeNextLetter(String text) {
+    if (currentIndex < text.length) {
+      setState(() {
+        displayedText += text[currentIndex];
+        currentIndex++;
+      });
+      Future.delayed(const Duration(milliseconds: 50), () => _writeNextLetter(text));
+    } else if (text == fullText) {
+      setState(() {
+        showButton = true;
+      });
+    } else if (text == instructionText) {
+      _highlightBoard();
+      _speakText(text); // Hablar el texto de instrucción después de mostrarlo
+    }
+  }
+
+  void _onShowExperimentsPressed() {
+    setState(() {
+      showExperimentText = true;
+      showButton = false;
+      displayedText = experimentsText;
+    });
+    _startWritingText(instructionText); // Mostrar el cuadro de instrucciones antes de hablar
   }
 
   void _toggleDrawer() {
@@ -79,55 +108,27 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
     });
   }
 
-  // Método para escribir letra por letra
-  void _startWritingText(String text) {
+  void _highlightBoard() {
     setState(() {
-      showButton = false;
-      currentText = text;
-      displayedText = '';
-      currentIndex = 0;
-      showExperimentButtons = false;
+      darkBackground = true;
     });
-
-    Future.delayed(const Duration(milliseconds: 100), _writeNextLetter);
-  }
-
-  // Método modificado para escribir el texto pasado por parámetro
-  void _writeNextLetter() {
-    if (currentIndex < currentText.length) {
-      setState(() {
-        displayedText += currentText[currentIndex];
-        currentIndex++;
-      });
-
-      Future.delayed(const Duration(milliseconds: 20), _writeNextLetter);
-    } else {
-      // Cuando se termina de escribir, mostrar los botones de experimentos
-      setState(() {
-        showExperimentButtons = true;
-      });
-      if (currentExperiment == 1) {
-        _startHandScaleAnimation(); // Iniciar la animación de la mano
-      }
-    }
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _handScaleController.dispose(); // Dispose del controlador de la mano
+    _flutterTts.stop();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Obtenemos el tamaño de la pantalla
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.width < 600;
 
     return Scaffold(
-      extendBodyBehindAppBar: true, // Eliminar la franja blanca
-      backgroundColor: Colors.transparent,
+      extendBodyBehindAppBar: true,
+      backgroundColor: darkBackground ? Colors.black.withOpacity(0.6) : Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -143,12 +144,16 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
       ),
       body: Stack(
         children: [
-          // Fondo de pantalla (laboratorio actualizado)
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/galileo/Aula_primaria.png',
-              // 'assets/images/galileo/Aula_infantil.png', // Fondo infantil
-              fit: BoxFit.cover,
+            child: ColorFiltered(
+              colorFilter: darkBackground
+                  ? ColorFilter.mode(
+                      Colors.black.withOpacity(0.6), BlendMode.darken)
+                  : ColorFilter.mode(Colors.transparent, BlendMode.multiply),
+              child: Image.asset(
+                'assets/images/galileo/Aula_primaria.png',
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           SlideTransition(
@@ -158,222 +163,80 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
           Center(
             child: Stack(
               children: [
-                // Contenido superpuesto en la pizarra
-                Positioned(
-                  top: screenSize.height * 0.35, // Ajuste para subir el texto
-                  left: screenSize.width * 0.1,
-                  right: screenSize.width * 0.1,
-                  child: SizedBox(
-                    width: screenSize.width * 0.8,
-                    height: screenSize.height * 0.3,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          displayedText,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: isSmallScreen ? 18 : 22,
-                            fontWeight: FontWeight.bold,
-                            fontFamily:
-                                'ChalkFont', // Usa la fuente personalizada
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                // Cuadro blanco de texto que aparece abajo
+                if (!showExperimentText)
+                  Positioned(
+                    bottom: 50,
+                    left: 20,
+                    right: 20,
+                    child: Container(
+                      padding: EdgeInsets.all(16),
+                      color: Colors.white,
+                      child: Text(
+                        displayedText,
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
-                ),
-                // Botón para iniciar la escritura letra por letra
+                // Botón para mostrar los experimentos con efecto de agrandamiento
                 if (showButton)
                   Align(
-                    alignment: const Alignment(0.0, 0.0),
-                    // alignment: const Alignment(0.0, -0.77), // Alineamiento aula infantil
+                    alignment: Alignment.center,
                     child: MouseRegion(
                       onEnter: (_) => setState(() => isHovered = true),
                       onExit: (_) => setState(() => isHovered = false),
                       child: AnimatedScale(
-                        scale: isHovered
-                            ? 1.1
-                            : 1.0, // Cambia el tamaño cuando el cursor está encima
+                        scale: isHovered ? 1.1 : 1.0,
                         duration: const Duration(milliseconds: 200),
                         child: ElevatedButton(
-                          onPressed: () {
-                            _startWritingText(fullText);
-                          },
-                          child: Text(
-                            'Mostrar Experimentos',
-                            style: TextStyle(
-                              fontSize: isSmallScreen ? 16 : 20,
-                            ),
-                          ),
+                          onPressed: _onShowExperimentsPressed,
+                          child: Text("Mostrar Experimentos"),
                         ),
                       ),
                     ),
                   ),
-                // Botones de experimentos que aparecen después de mostrar el texto
-                if (showExperimentButtons) ...[
-                  // Experimento #1
+                // Texto de los experimentos en la pizarra
+                if (showExperimentText)
+                  Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                      ),
+                      child: Text(
+                        experimentsText,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                // Cuadro de instrucción que aparece después de mostrar los experimentos
+                if (displayedText == instructionText)
                   Positioned(
-                    top: 350,
-                    right: 205,
-                    child: GestureDetector(
-                      onTap: currentExperiment == 1
-                          ? () {
-                              _stopHandScaleAnimation();
-                              _startWritingText(
-                                  'EXPERIMENTO #1\n\nEste es el experimento número 1.');
-                              setState(() {
-                                currentExperiment = 2;
-                              });
-                              _startHandScaleAnimation();
-                            }
-                          : null,
-                      child: SizedBox(
-                        height: 150,
-                        width: 150,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            // Área clicable transparente
-                            Container(
-                              color: Colors.transparent,
-                              height: 150,
-                              width: 150,
-                            ),
-                            // Mostrar la mano si es el experimento actual
-                            if (currentExperiment == 1)
-                              AnimatedBuilder(
-                                animation: _handScaleAnimation,
-                                builder: (context, child) {
-                                  return Transform.scale(
-                                    scale: _handScaleAnimation.value,
-                                    child: child,
-                                  );
-                                },
-                                child: Image.asset(
-                                  'assets/images/galileo/mano.png', // Reemplaza con la ruta correcta de tu mano.png
-                                  width: 150,
-                                  height: 150,
-                                ),
-                              ),
-                          ],
-                        ),
+                    bottom: 50,
+                    left: 20,
+                    right: 20,
+                    child: Container(
+                      padding: EdgeInsets.all(16),
+                      color: Colors.white,
+                      child: Text(
+                        displayedText,
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                  // Experimento #2
-                  Positioned(
-                    top: 340,
-                    left: 280,
-                    child: GestureDetector(
-                      onTap: currentExperiment == 2
-                          ? () {
-                              _stopHandScaleAnimation();
-                              _startWritingText(
-                                  'EXPERIMENTO #2\n\nEste es el experimento número 2.');
-                              setState(() {
-                                currentExperiment = 3;
-                              });
-                              _startHandScaleAnimation();
-                            }
-                          : null,
-                      child: SizedBox(
-                        height: 140,
-                        width: 150,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            // Área clicable transparente
-                            Container(
-                              color: Colors.transparent,
-                              height: 140,
-                              width: 150,
-                            ),
-                            // Mostrar la mano si es el experimento actual
-                            if (currentExperiment == 2)
-                              AnimatedBuilder(
-                                animation: _handScaleAnimation,
-                                builder: (context, child) {
-                                  return Transform.scale(
-                                    scale: _handScaleAnimation.value,
-                                    child: child,
-                                  );
-                                },
-                                child: Image.asset(
-                                  'assets/images/galileo/mano.png', // Reemplaza con la ruta correcta de tu mano.png
-                                  width: 150,
-                                  height: 150,
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Experimento #3
-                  Positioned(
-                    top: 5,
-                    right: 240,
-                    child: GestureDetector(
-                      onTap: currentExperiment == 3
-                          ? () {
-                              _stopHandScaleAnimation();
-                              _startWritingText(
-                                  'EXPERIMENTO #3\n\nEste es el experimento número 3.');
-                              setState(() {
-                                currentExperiment =
-                                    4; // No hay más experimentos
-                              });
-                            }
-                          : null,
-                      child: SizedBox(
-                        height: 200,
-                        width: 200,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            // Área clicable transparente
-                            Container(
-                              color: Colors.transparent,
-                              height: 200,
-                              width: 200,
-                            ),
-                            // Mostrar la mano si es el experimento actual
-                            if (currentExperiment == 3)
-                              AnimatedBuilder(
-                                animation: _handScaleAnimation,
-                                builder: (context, child) {
-                                  return Transform.scale(
-                                    scale: _handScaleAnimation.value,
-                                    child: child,
-                                  );
-                                },
-                                child: Image.asset(
-                                  'assets/images/galileo/mano.png', // Reemplaza con la ruta correcta de tu mano.png
-                                  width: 150,
-                                  height: 150,
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                // Mostrar el personaje de Galileo
                 GalileoCharacter(
                   key: galileoKey,
                   posX: 1000.0,
                   posY: 0,
                 ),
-                // Positioned(
-                //   bottom: screenSize.height * 0.05,
-                //   left: screenSize.width * 0.05,
-                //   child: ElevatedButton(
-                //       onPressed: galileoKey.currentState?.startWalking,
-                //       child: const Text('Caminar')),
-                // )
               ],
             ),
           ),
