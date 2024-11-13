@@ -1,7 +1,7 @@
+import 'dart:js' as js;
+import 'dart:js_util' as js_util;
 import 'package:design_galileo/widgets/galileo_character.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'dart:async';
 import 'package:design_galileo/widgets/side_menu_alumno.dart';
 
 class AlumnoPage extends StatefulWidget {
@@ -23,10 +23,12 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
   bool showButton = false;
   bool showExperimentText = false;
   bool darkBackground = false;
-  bool isHovered = false; // Control del efecto hover
+  bool isHovered = false;
+  bool isStarted = false; // Control para el botón de inicio
+  bool isHoveredIniciar = false; // Control para hover en el botón "Iniciar"
+  bool showingInstructionText = false; // Control para mostrar el texto de instrucción letra por letra
 
   final GlobalKey<GalileoCharacterState> galileoKey = GlobalKey<GalileoCharacterState>();
-  late FlutterTts _flutterTts;
 
   @override
   void initState() {
@@ -45,28 +47,47 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
       curve: Curves.easeInOut,
     ));
 
-    _flutterTts = FlutterTts();
-    _flutterTts.setSpeechRate(0.5);
-    _flutterTts.setPitch(0.8); // Grave
-    _flutterTts.setVoice({"name": "es-MX-standard-B", "locale": "es-MX"}); // Masculina y grave
+    checkResponsiveVoice();
+  }
 
+  // Verificación de carga de ResponsiveVoice
+  void checkResponsiveVoice() {
+    if (js.context.hasProperty('responsiveVoice')) {
+      print("ResponsiveVoice cargado correctamente.");
+    } else {
+      print("Error: ResponsiveVoice no se ha cargado.");
+    }
+  }
+
+  // Función para hablar utilizando la función auxiliar de JavaScript definida en index.html
+  void speakText(String text) {
+    Future.delayed(Duration(seconds: 2), () {
+      if (js.context.hasProperty('speakWithResponsiveVoice')) {
+        js.context.callMethod('speakWithResponsiveVoice', [text, "Spanish Latin American Male"]);
+      } else {
+        print("Error: speakWithResponsiveVoice no está disponible.");
+      }
+    });
+  }
+
+  // Iniciar la aplicación después de la interacción del usuario
+  void _startApplication() {
+    setState(() {
+      isStarted = true;
+    });
     _startIntroDialogue();
   }
 
   void _startIntroDialogue() {
-    _speakText(fullText); // Hablar el texto antes de mostrarlo letra por letra
+    speakText(fullText); // Hablar el texto antes de mostrarlo letra por letra
     _startWritingText(fullText);
-  }
-
-  void _speakText(String text) async {
-    await _flutterTts.stop(); // Detener cualquier texto en proceso
-    await _flutterTts.speak(text);
   }
 
   void _startWritingText(String text) {
     setState(() {
       displayedText = '';
       currentIndex = 0;
+      showingInstructionText = text == instructionText;
     });
     Future.delayed(const Duration(milliseconds: 100), () => _writeNextLetter(text));
   }
@@ -84,7 +105,7 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
       });
     } else if (text == instructionText) {
       _highlightBoard();
-      _speakText(text); // Hablar el texto de instrucción después de mostrarlo
+      speakText(text); // Hablar el texto de instrucción después de mostrarlo
     }
   }
 
@@ -117,7 +138,6 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     _controller.dispose();
-    _flutterTts.stop();
     super.dispose();
   }
 
@@ -163,23 +183,42 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
           Center(
             child: Stack(
               children: [
-                // Cuadro blanco de texto que aparece abajo
-                if (!showExperimentText)
+                // Botón de Iniciar con efecto de agrandamiento
+                if (!isStarted)
+                  Center(
+                    child: MouseRegion(
+                      onEnter: (_) => setState(() => isHoveredIniciar = true),
+                      onExit: (_) => setState(() => isHoveredIniciar = false),
+                      child: AnimatedScale(
+                        scale: isHoveredIniciar ? 1.1 : 1.0,
+                        duration: const Duration(milliseconds: 200),
+                        child: ElevatedButton(
+                          onPressed: _startApplication,
+                          child: Text("Iniciar"),
+                        ),
+                      ),
+                    ),
+                  ),
+                // Texto de bienvenida o instrucción con cuadro blanco reducido y borde negro
+                if (isStarted && !showExperimentText)
                   Positioned(
                     bottom: 50,
-                    left: 20,
-                    right: 20,
+                    left: screenSize.width * 0.25, // Ajuste del ancho del cuadro
+                    right: screenSize.width * 0.25,
                     child: Container(
                       padding: EdgeInsets.all(16),
-                      color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black, width: 3),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: Text(
                         displayedText,
-                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        style: TextStyle(fontSize: 16, color: Colors.black),
                         textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                // Botón para mostrar los experimentos con efecto de agrandamiento
                 if (showButton)
                   Align(
                     alignment: Alignment.center,
@@ -196,7 +235,6 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                // Texto de los experimentos en la pizarra
                 if (showExperimentText)
                   Center(
                     child: Container(
@@ -215,23 +253,25 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                // Cuadro de instrucción que aparece después de mostrar los experimentos
                 if (displayedText == instructionText)
                   Positioned(
                     bottom: 50,
-                    left: 20,
-                    right: 20,
+                    left: screenSize.width * 0.25, // Ajuste del ancho del cuadro
+                    right: screenSize.width * 0.25,
                     child: Container(
                       padding: EdgeInsets.all(16),
-                      color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.black, width: 3),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: Text(
                         displayedText,
-                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        style: TextStyle(fontSize: 16, color: Colors.black),
                         textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                // Mostrar el personaje de Galileo
                 GalileoCharacter(
                   key: galileoKey,
                   posX: 1000.0,

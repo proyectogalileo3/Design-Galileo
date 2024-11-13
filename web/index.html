@@ -31,6 +31,16 @@
 
   <title>design_galileo</title>
   <link rel="manifest" href="manifest.json">
+  <script src="https://code.responsivevoice.org/responsivevoice.js?key=wr0L76Vy"></script>
+  <script>
+    function speakWithResponsiveVoice(text, voice) {
+      if (responsiveVoice && responsiveVoice.speak) {
+        responsiveVoice.speak(text, voice);
+      } else {
+        console.error("Error: responsiveVoice no está disponible.");
+      }
+    }
+  </script>
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
