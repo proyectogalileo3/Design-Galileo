@@ -14,6 +14,9 @@ class AlumnoPage extends StatefulWidget {
 class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _slideAnimation;
+  late AnimationController _handAnimationController;
+  late Animation<Offset> _handSlideAnimation;
+
   bool isDrawerOpen = false;
   String fullText = 'Hola, soy Galileo. Bienvenido a tu espacio de experimentos.';
   String experimentsText = 'EXPERIMENTOS:\n\nAquí puedes ver tus experimentos asignados';
@@ -24,9 +27,9 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
   bool showExperimentText = false;
   bool darkBackground = false;
   bool isHovered = false;
-  bool isStarted = false; // Control para el botón de inicio
-  bool isHoveredIniciar = false; // Control para hover en el botón "Iniciar"
-  bool showingInstructionText = false; // Control para mostrar el texto de instrucción letra por letra
+  bool isStarted = false;
+  bool isHoveredIniciar = false;
+  bool showingInstructionText = false;
 
   final GlobalKey<GalileoCharacterState> galileoKey = GlobalKey<GalileoCharacterState>();
 
@@ -47,10 +50,22 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
       curve: Curves.easeInOut,
     ));
 
+    _handAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    )..repeat(reverse: true);
+
+    _handSlideAnimation = Tween<Offset>(
+      begin: Offset(-0.25, 0),
+      end: Offset(-0.20, 0),
+    ).animate(CurvedAnimation(
+      parent: _handAnimationController,
+      curve: Curves.easeInOut,
+    ));
+
     checkResponsiveVoice();
   }
 
-  // Verificación de carga de ResponsiveVoice
   void checkResponsiveVoice() {
     if (js.context.hasProperty('responsiveVoice')) {
       print("ResponsiveVoice cargado correctamente.");
@@ -59,7 +74,6 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
     }
   }
 
-  // Función para hablar utilizando la función auxiliar de JavaScript definida en index.html
   void speakText(String text) {
     Future.delayed(Duration(seconds: 2), () {
       if (js.context.hasProperty('speakWithResponsiveVoice')) {
@@ -70,7 +84,6 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
     });
   }
 
-  // Iniciar la aplicación después de la interacción del usuario
   void _startApplication() {
     setState(() {
       isStarted = true;
@@ -79,7 +92,7 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
   }
 
   void _startIntroDialogue() {
-    speakText(fullText); // Hablar el texto antes de mostrarlo letra por letra
+    speakText(fullText);
     _startWritingText(fullText);
   }
 
@@ -105,7 +118,7 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
       });
     } else if (text == instructionText) {
       _highlightBoard();
-      speakText(text); // Hablar el texto de instrucción después de mostrarlo
+      speakText(text);
     }
   }
 
@@ -115,7 +128,7 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
       showButton = false;
       displayedText = experimentsText;
     });
-    _startWritingText(instructionText); // Mostrar el cuadro de instrucciones antes de hablar
+    _startWritingText(instructionText);
   }
 
   void _toggleDrawer() {
@@ -138,17 +151,17 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
   @override
   void dispose() {
     _controller.dispose();
+    _handAnimationController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final isSmallScreen = screenSize.width < 600;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: darkBackground ? Colors.black.withOpacity(0.6) : Colors.transparent,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -165,17 +178,29 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
       body: Stack(
         children: [
           Positioned.fill(
-            child: ColorFiltered(
-              colorFilter: darkBackground
-                  ? ColorFilter.mode(
-                      Colors.black.withOpacity(0.6), BlendMode.darken)
-                  : ColorFilter.mode(Colors.transparent, BlendMode.multiply),
-              child: Image.asset(
-                'assets/images/galileo/Aula_primaria.png',
-                fit: BoxFit.cover,
-              ),
+            child: Image.asset(
+              'assets/images/galileo/Aula_primaria.png',
+              fit: BoxFit.cover,
             ),
           ),
+          if (darkBackground)
+            Positioned.fill(
+              child: Container(
+                color: Colors.black.withOpacity(0.6),
+              ),
+            ),
+          // Añadimos la pizarra con color original
+          if (darkBackground)
+            Positioned(
+              top: screenSize.height * 0.35, // Ajusta este valor para subir o bajar la pizarra
+              left: screenSize.width * 0.25, // Ajusta este valor para mover la pizarra a la izquierda o derecha
+              width: screenSize.width * 0.50, // Ajusta el ancho de la pizarra
+              height: screenSize.height * 0.32, // Ajusta la altura de la pizarra
+              child: Image.asset(
+                'assets/images/galileo/Pizarra.png', // Imagen de la pizarra
+                fit: BoxFit.contain,
+              ),
+            ),
           SlideTransition(
             position: _slideAnimation,
             child: SideMenuAlumno(onClose: _toggleDrawer),
@@ -183,7 +208,6 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
           Center(
             child: Stack(
               children: [
-                // Botón de Iniciar con efecto de agrandamiento
                 if (!isStarted)
                   Center(
                     child: MouseRegion(
@@ -199,11 +223,10 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                // Texto de bienvenida o instrucción con cuadro blanco reducido y borde negro
                 if (isStarted && !showExperimentText)
                   Positioned(
                     bottom: 50,
-                    left: screenSize.width * 0.25, // Ajuste del ancho del cuadro
+                    left: screenSize.width * 0.25,
                     right: screenSize.width * 0.25,
                     child: Container(
                       padding: EdgeInsets.all(16),
@@ -256,7 +279,7 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
                 if (displayedText == instructionText)
                   Positioned(
                     bottom: 50,
-                    left: screenSize.width * 0.25, // Ajuste del ancho del cuadro
+                    left: screenSize.width * 0.25,
                     right: screenSize.width * 0.25,
                     child: Container(
                       padding: EdgeInsets.all(16),
@@ -269,6 +292,20 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
                         displayedText,
                         style: TextStyle(fontSize: 16, color: Colors.black),
                         textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                if (darkBackground)
+                  Positioned(
+                    top: screenSize.height * 0.4,
+                    left: screenSize.width * 0.25,
+                    right: screenSize.width * 0.25,
+                    child: SlideTransition(
+                      position: _handSlideAnimation,
+                      child: Image.asset(
+                        'assets/images/galileo/mano.png',
+                        width: 100,
+                        height: 100,
                       ),
                     ),
                   ),
