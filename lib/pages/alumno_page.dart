@@ -137,7 +137,7 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
         currentIndex++;
       });
       Future.delayed(
-          const Duration(milliseconds: 50), () => _writeNextLetter(text));
+          const Duration(milliseconds: 30), () => _writeNextLetter(text));
     } else if (text == fullText) {
       setState(() {
         showButton = true;
@@ -153,12 +153,12 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
       showButton = false;
       displayedText = experimentsText;
     });
-    Future.delayed(Duration(milliseconds: 3500), () {
+    Future.delayed(Duration(milliseconds: 3000), () {
       setState(() {
         showExperimentText = true;
       });
     });
-    Future.delayed(Duration(seconds: 12), () {
+    Future.delayed(Duration(seconds: 5), () {
       setState(() {
         showHand = false;
       });
@@ -264,8 +264,8 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
                 if (isStarted && !showExperimentText)
                   Positioned(
                     bottom: 50,
-                    left: screenSize.width * 0.25,
-                    right: screenSize.width * 0.25,
+                    left: screenSize.width * 0.30,
+                    right: screenSize.width * 0.30,
                     child: Container(
                       padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -299,8 +299,8 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
                 if (showExperimentText)
                   Positioned(
                     top: screenSize.height * 0.35,
-                    left: screenSize.width * 0.35,
-                    width: screenSize.width * 0.3,
+                    left: screenSize.width * 0.37,
+                    width: screenSize.width * 0.25, // Ajusta el tamaño de las listas
                     height: screenSize.height * 0.3,
                     child: Container(
                       padding: const EdgeInsets.all(16),
@@ -384,8 +384,8 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
                 if (displayedText == instructionText)
                   Positioned(
                     bottom: 50,
-                    left: screenSize.width * 0.25,
-                    right: screenSize.width * 0.25,
+                    left: screenSize.width * 0.30,
+                    right: screenSize.width * 0.30,
                     child: Container(
                       padding: EdgeInsets.all(16),
                       decoration: BoxDecoration(
@@ -418,8 +418,8 @@ class AlumnoPageState extends State<AlumnoPage> with TickerProviderStateMixin {
                   key: galileoKey,
                   sizeX: 600.0,
                   sizeY: 600.0,
-                  posX: 150.0,
-                  posY: 100.0,
+                  posX: 200.0,
+                  posY: 30.0,
                 ),
               ],
             ),
@@ -564,7 +564,7 @@ class PantallaExperimentosState extends State<PantallaExperimentos> {
             sizeX: 750.0,
             sizeY: 750.0,
             posX: screenSize.width * 0.65,
-            posY: 150.0,
+            posY: 80.0,
           ),
           DialogBubble(
             dialogs: widget.actividadDesarrollo,
