@@ -1,0 +1,619 @@
+{
+    "actividad001": {
+        "introduccion_galileo": [
+            "¡Hola, jóvenes científicos! Hoy vamos a sumergirnos en el fascinante mundo del sonido y descubrir cómo nuestros oídos captan los sonidos a nuestro alrededor.",
+            "Antes de empezar, quiero que pensemos juntos en algunas preguntas: ¿Qué es el sonido? ¿Cómo se transmite a través del aire hasta llegar a nuestros oídos? ¿Estáis listos para descubrirlo?",
+            "En nuestra actividad de hoy, vamos a construir un modelo de oído humano usando algunos materiales muy sencillos. ¿Curiosos por saber cómo? ¡Vamos allá!"
+        ],
+        "conclusion_galileo": [
+            "Después de realizar nuestro experimento, ¿qué observaciones habéis hecho? ¿Podríais explicar por qué el sonido cambia cuando usamos nuestro tubo?",
+            "Recordemos nuestras hipótesis y preguntas iniciales:",
+            " ¿Se han cumplido? ¿Qué hemos aprendido sobre cómo funciona el oído humano y cómo determinamos la dirección de los sonidos?",
+            "El oído humano es un sistema increíblemente complejo y eficaz para captar sonidos. El tubo representa la oreja, que dirige los sonidos hacia el tímpano, nuestro film transparente, que vibra al captar esos sonidos.",
+            "Esta capacidad de determinar la dirección del sonido es crucial para nuestra interacción diaria con el mundo. ¿Qué pensáis sobre esto? ¿Cómo podríamos usar este conocimiento en nuestra vida diaria?",
+            "Espero que os haya gustado el experimento de hoy.",
+            "¡Hasta la próxima!"
+        ],
+        "preguntas_finales": [
+            "¿Qué ha ocurrido?",
+            "¿Se han cumplido nuestras hipótesis?",
+            "¿A qué crees que se debe?",
+            "¿Qué hemos aprendido en esta actividad?",
+            "¿Cómo funciona el oído?",
+            "¿Podemos determinar de dónde vienen los sonidos?",
+            "¿Cómo?"
+        ],
+        "desarrollo_galileo": [
+            " ¿Ya los tenéis todos listos? Excelente, comencemos por el primer paso.",
+            "Vamos a tomar el tubo de cartón y cubrir uno de sus extremos con nuestro film transparente. Asegúrate de que quede bien estirado y luego fíjalo con la gomilla elástica.",
+            "Ahora, pon el extremo del tubo con el film cerca de uno de tus oídos. ¿Notas algún cambio en cómo suenan las cosas a tu alrededor? Vamos a explorar qué sucede cuando golpeas suavemente el film.",
+            "Es hora de experimentar con un amigo. Uno de vosotros se tapará los ojos mientras el otro hace sonidos en diferentes direcciones. ¿Podrás adivinar de dónde vienen los sonidos solo con tu oído? ¡Intercambiad roles y probadlo!"
+        ],
+        "preguntas_iniciales": [
+            "¿Qué es el sonido?",
+            "¿Cómo se transmite?",
+            "¿Cómo funciona el oído humano?",
+            "¿Podemos determinar de dónde vienen los sonidos?",
+            "¿Cómo lo hacemos?"
+        ],
+        "imagenes": [
+            ""
+        ],
+        "numero_actividad": "Actividad 1.1",
+        "descripcion": "En esta actividad vamos a reproducir un oído humano con un tubo de cartón y un trozo de film transparente. Luego comprobaremos cómo funciona el oído y haremos unas pruebas para comprobar si podemos determinar de dónde vienen los sonidos que escuchamos.",
+        "trimestre": 1,
+        "explicacion": "El oído humano es muy complejo, pero tiene dos elementos principales, la oreja (el tubo de cartón) y el tímpano (el film transparente). El cometido de la oreja es el de captar el sonido y dirigirlo al interior del oído, donde el hace vibrar al tímpano. Podemos comprobar todo este proceso tanto cuando ponemos el tubo con el film en el lado de nuestro oído como cuando le damos la vuelta al tubo. Nuestra capacidad de detectar de dónde vienen los sonidos depende de la intensidad con la que oigamos en sonido por cada oído. Así, si el sonido suena más fuerte en el oído izquierdo que en el derecho, sabremos que el sonido proviene de este lado, y viceversa. No obstante, cuando el sonido ",
+        "titulo": "¡Escucha!",
+        "materiales": [
+            "Tubo de cartón",
+            "Plástico transparente tipo film",
+            "Tijeras",
+            "Gomilla elástica",
+            "Pañuelo para tapar los ojos"
+        ],
+        "grupo": "primaria1",
+        "nivel_educativo": "Primaria",
+        "desarrollo": [
+            "Paso 1: Tomamos un tubo de cartón como el que hay en el interior de los rollos de papel higiénico o papel de cocina",
+            "Paso 2: Tomamos un rollo de film transparente y cortamos un trozo de unos 10cm x 10cm",
+            "Paso 3: Ponemos el film transparente tapando uno de los extremos del tubo",
+            "Paso 4: Con ayuda de una gomilla, fijamos el film al extremo del tubo",
+            "Paso 5: Acercamos ahora el tubo a uno de nuestros oídos con el film en el lado de nuestro oído",
+            "Paso 6: Comprobamos cómo suenan los sonidos",
+            "Paso 7: Le damos la vuelta al tubo, de manera que el extremo sin film quede en el lado de nuestro oído",
+            "Paso 8: Damos suaves golpecitos con la yema de los dedos en el film transparente y prestamos atención al sonido que produce",
+            "Paso 9: Nos dividimos por parejas",
+            "Paso 10: Uno de los miembros de la pareja se cubre los ojos con un pañuelo",
+            "Paso 11: El otro miembro prueba a chasquear los dedos para que el compañero adivine de dónde viene el sonido. Probamos a chasquear los dedos cerca del oído izquierdo y del derecho, pero luego lo hacemos justo delante de la cara, encima de la cabeza, detrás de la cabeza, etc."
+        ]
+    },
+    "actividad002": {
+        "introduccion_galileo": [
+            "¡Hola, jóvenes científicos! Hoy vamos a explorar el punto ciego de nuestros ojos y descubrir cómo funciona nuestra visión.",
+            "Antes de empezar, quiero que pensemos juntos en algunas preguntas: ¿Cómo funciona el ojo humano? ¿Vemos exactamente lo mismo a través de los dos ojos? ¿Qué ocurre si nos tapamos un ojo?",
+            "En nuestra actividad de hoy, vamos a realizar un experimento sencillo pero fascinante que nos ayudará a entender mejor estos conceptos. ¿Estáis listos? ¡Vamos allá!"
+        ],
+        "materiales": [
+            "Hoja de papel blanca",
+            "Hoja de papel o cartulina de otro color",
+            "Lápiz"
+        ],
+        "nivel_educativo": "Primaria",
+        "desarrollo": [
+            "Paso 1: Tomamos un folio en blanco",
+            "Paso 2: Con ayuda de un lápiz, dibujamos dos circulitos de 2-3 mm de diámetro y separados unos 5-6 cm entre sí",
+            "Paso 3: Colocamos el folio en la mesa",
+            "Paso 4: Situamos nuestra cabeza sobre el folio, a unos 30 cm de éste, de manera que los puntos quedan, más o menos, uno delante de cada ojo",
+            "Paso 5: Nos tapamos el ojo izquierdo, y con el ojo derecho miramos al punto izquierdo. Aunque estemos mirando al punto izquierdo, el ojo derecho (el abierto) es capaz de ver ambos puntos a la vez.",
+            "Paso 6: Vamos acercando lentamente nuestra cabeza a la hoja de papel, sin dejar de mirar fijamente al circulito izquierdo. Nota: al hacer esto, habrá un momento en que el circulito derecho desaparecerá. Seguimos acercando la cabeza hasta que el círculo derecho vuelva a aparecer.",
+            "Paso 7: Repetimos todo el proceso, pero con el otro ojo, de manera que nos tapamos el ojo derecho y miramos con el ojo izquierdo al círculo derecho",
+            "Paso 8: Repetimos toda la experiencia, pero en este caso usando un folio o cartulina de cualquier color que no sea blanco"
+        ],
+        "grupo": "primaria1",
+        "preguntas_iniciales": [
+            "¿Cómo funciona el ojo humano?",
+            "¿Vemos exactamente lo mismo a través de los dos ojos?",
+            "¿Qué ocurre si nos tapamos un ojo?",
+            "¿Vemos exactamente lo mismo que con dos?"
+        ],
+        "numero_actividad": "Actividad 1.2",
+        "preguntas_finales": [
+            "¿Qué ha ocurrido?",
+            "¿Se han cumplido nuestras hipótesis?",
+            "¿A qué crees que se debe?",
+            "¿Qué hemos aprendido en esta actividad?",
+            "¿Tienen los ojos puntos ciegos?",
+            "¿A qué crees que se deben?",
+            "Si hay un punto ciego en cada ojo ¿Por qué no lo notamos al mirar?"
+        ],
+        "imagenes": [
+            "assets/images/examples/avion1.png",
+            "assets/images/examples/avion2.png",
+            "assets/images/examples/avion3.png",
+            "assets/images/examples/avion4.png",
+            "assets/images/examples/avion5.png",
+            "assets/images/examples/avion6.png",
+            "assets/images/examples/avion7.png",
+            "assets/images/examples/avion8.png"
+        ],
+        "desarrollo_galileo": [
+            " ¿Ya los tenéis todos listos? Excelente, comencemos por el primer paso.",
+            "Vamos a tomar el folio en blanco y dibujar dos circulitos de 2-3 mm de diámetro y separados unos 5-6 cm entre sí.",
+            "Ahora, colocamos el folio en la mesa y situamos nuestra cabeza sobre él a unos 30 cm de distancia.",
+            "Nos tapamos el ojo izquierdo y con el ojo derecho miramos al punto izquierdo. A medida que nos acercamos lentamente, veremos cómo el punto derecho desaparece y vuelve a aparecer.",
+            "Vamos a repetir todo el proceso con el otro ojo y luego con una hoja de papel de color diferente. ¿Listos para empezar?"
+        ],
+        "conclusion_galileo": [
+            "Después de realizar nuestro experimento, ¿qué observaciones habéis hecho? ¿Podríais explicar por qué el circulito derecho desaparece y vuelve a aparecer?",
+            "Recordemos nuestras hipótesis y preguntas iniciales: ¿Se han cumplido? ¿Qué hemos aprendido sobre cómo funciona el punto ciego en nuestros ojos?",
+            "La retina es el tejido nervioso que recubre la parte posterior del ojo. Sobre ella se forman las imágenes que nos dan la sensación de visión. Está constituida por unas células especialmente sensibles a la luz denominadas conos y bastoncillos. La retina está conectada al cerebro por medio del nervio óptico. El punto en el que este se une a la retina se denomina punto ciego por carecer de células fotosensibles.",
+            "Normalmente no percibimos el punto ciego ya que, al ver un objeto con ambos ojos, la parte del mismo que incide sobre el punto ciego de uno de ellos, incide sobre una zona sensible del otro, y viceversa. Si cerramos un ojo tampoco seremos conscientes de la existencia del punto ciego debido a que el cerebro normalmente nos engaña y completa la parte que falta de la imagen.",
+            "Espero que os haya gustado el experimento de hoy.",
+            "¡Hasta la próxima!"
+        ],
+        "explicacion": "La retina es el tejido nervioso que recubre la parte posterior del ojo. Sobre ella se forman las imágenes que nos dan la sensación de visión. Está constituida por unas células especialmente sensibles a la luz denominadas conos y bastoncillos. La retina está conectada al cerebro por medio del nervio óptico. El punto en el que este se une a la retina se denomina punto ciego por carecer de células fotosensibles. Normalmente no percibimos el punto ciego ya que, al ver un objeto con ambos ojos, la parte del mismo que incide sobre el punto ciego de uno de ellos, incide sobre una zona sensible del otro, y viceversa. Si cerramos un ojo tampoco seremos conscientes de la existencia del punto ciego debido a que el cerebro normalmente nos engaña y completa la parte que falta de la imagen. Esto último lo comprobamos fácilmente al usar el folio o cartulina de color, ya que cuando llegamos al punto ciego, el cerebro no completa la imagen de color blanco, sino del color del papel utilizado. Es decir, el cerebro completa la información que falta utilizando la que hay alrededor de la zona que falta.",
+        "descripcion": "En esta actividad vamos dibujar dos circulitos en un folio en blanco. Luego, nos taparemos un ojo y miraremos a ambos puntos con el ojo que queda abierto, e iremos acercándonos lentamente al dibujo. A continuación, haremos exactamente lo mismo, pero utilizando una hoja de un color diferente.",
+        "titulo": "El punto ciego del ojo",
+        "trimestre": 1
+    },
+    "actividad003": {
+        "preguntas_iniciales": [
+            "¿Ven ambos ojos lo mismo a la vez?",
+            "Si ambos ojos están separados, cada uno verá algo ligeramente distinto del otro ¿Cómo hace nuestro cerebro para procesar las dos imágenes a la vez?",
+            "¿Qué podemos hacer para comprobarlo?"
+        ],
+        "descripcion": "En esta actividad vamos a hacer un tubo con una hoja de papel. Luego, miraremos con un ojo a través del tubo a la vez que acercamos una mano a dicho tubo.",
+        "materiales": [
+            "Folios",
+            "Lápices de colores para decorarlo",
+            "Pegamento o cinta adhesiva"
+        ],
+        "titulo": "Lo que el ojo no ve",
+        "introduccion_galileo": [
+            "Hoy vamos a explorar cómo nuestros ojos y cerebro trabajan juntos para crear la imagen que vemos.",
+            "¿Alguna vez te has preguntado si ambos ojos ven exactamente lo mismo? Vamos a descubrirlo con un experimento sencillo.",
+            "¡Tomemos nuestros materiales y comencemos!"
+        ],
+        "nivel_educativo": "Primaria",
+        "trimestre": 1,
+        "numero_actividad": "Actividad 1.3",
+        "desarrollo": [
+            "Paso 1: Tomamos un folio en blanco.",
+            "Paso 2: Lo decoramos a nuestro gusto con lápices de colores.",
+            "Paso 3: Hacemos un tubo de 3-4 cm de diámetro con el folio.",
+            "Paso 4: Usamos cinta adhesiva para pegar el tubo y evitar que se abra.",
+            "Paso 5: Sujetamos el tubo con la mano izquierda y lo colocamos frente a nuestro ojo izquierdo, de manera que podamos ver a través de él.",
+            "Paso 6: Miramos con ambos ojos a lo más lejano que tengamos a la vista (el techo, por ejemplo).",
+            "Paso 7: Abrimos la palma de la mano libre (la derecha).",
+            "Paso 8: Acercamos lentamente dicha palma al tubo en su parte más alejada de los ojos, y perpendicularmente al tubo."
+        ],
+        "desarrollo_galileo": [
+            "Tomamos un folio en blanco y lo decoramos a nuestro gusto con lápices de colores.",
+            "Hacemos un tubo de 3-4 cm de diámetro con el folio y lo pegamos con cinta adhesiva.",
+            "Sujetamos el tubo con la mano izquierda y lo colocamos frente a nuestro ojo izquierdo, de manera que podamos ver a través de él.",
+            "Miramos con ambos ojos a lo más lejano que tengamos a la vista (el techo, por ejemplo).",
+            "Abrimos la palma de la mano libre (la derecha) y la acercamos lentamente al tubo en su parte más alejada de los ojos, y perpendicularmente al tubo."
+        ],
+        "explicacion": "Nuestra vista se basa en la visión conjunta de los dos ojos a la vez. Aunque ambos ojos vean una imagen muy similar, al estar separados unos centímetros entre sí, la imagen que llega a cada ojo es ligeramente diferente. Una vez llegan las dos imágenes al cerebro, éste las solapa para generar la imagen final. En esta actividad, forzamos a que cada ojo vea cosas muy diferentes entre sí. Un ojo ve un agujero, mientras que el otro ojo ve una mano. El cerebro solapa ambas imágenes, por eso acabamos viendo la palma de la mano con un agujero en medio.",
+        "preguntas_finales": [
+            "¿Qué ha ocurrido?",
+            "¿Se han cumplido nuestras hipótesis?",
+            "¿A qué crees que se debe?",
+            "¿Qué hemos aprendido en esta actividad?",
+            "¿Ha aparecido un agujero en nuestra mano?",
+            "¿Por qué?"
+        ],
+        "conclusion_galileo": [
+            "Nuestra vista se basa en la visión conjunta de los dos ojos a la vez. Aunque ambos ojos vean una imagen muy similar, al estar separados unos centímetros entre sí, la imagen que llega a cada ojo es ligeramente diferente.",
+            "Una vez llegan las dos imágenes al cerebro, éste las solapa para generar la imagen final. En esta actividad, forzamos a que cada ojo vea cosas muy diferentes entre sí. Un ojo ve un agujero, mientras que el otro ojo ve una mano.",
+            "El cerebro solapa ambas imágenes, por eso acabamos viendo la palma de la mano con un agujero en medio."
+        ],
+        "imagenes": [
+            ""
+        ],
+        "grupo": "primaria1"
+    },
+    "actividad004": {
+        "grupo": "primaria1",
+        "conclusion_galileo": [
+            "Al estar separados, cada ojo lo ve todo desde un ángulo ligeramente diferente. De modo que las imágenes que capta el cerebro procedentes de cada ojo difieren un poco entre sí.",
+            "Comparando la imagen que recibe de un ojo y del otro, el cerebro puede ofrecer una panorámica tridimensional que ayuda a evaluar las distancias. Es lo que se denomina visión estereoscópica.",
+            "Al taparnos un ojo, eliminamos la visión estereoscópica y vemos las cosas en dos dimensiones, como en una fotografía, dificultando la apreciación de las distancias.",
+            "Luego, al ir repitiendo la experiencia varias veces se deberían mejorar los resultados, y es que el cerebro humano es capaz de aprender e ir adaptándose y aprende a estimar las distancias a pesar de contar con un solo ojo."
+        ],
+        "preguntas_iniciales": [
+            "¿Somos capaces de saber a qué distancia están las cosas que vemos?",
+            "¿Cómo lo sabemos?",
+            "¿Qué ocurre si miramos con un solo ojo?",
+            "¿Seguimos viendo las cosas?",
+            "¿Y calculando bien las distancias?"
+        ],
+        "introduccion_galileo": [
+            "¿Alguna vez te has preguntado cómo calculamos las distancias con nuestros ojos?",
+            "Hoy vamos a descubrirlo mediante un experimento divertido.",
+            "Prepara una moneda y un vaso y hagamos algunas pruebas."
+        ],
+        "materiales": [
+            "Un vaso",
+            "Una moneda"
+        ],
+        "imagenes": [
+            ""
+        ],
+        "numero_actividad": "Actividad 1.4",
+        "titulo": "Dos ojos ven mejor que uno",
+        "preguntas_finales": [
+            "¿Qué ha ocurrido?",
+            "¿Se han cumplido nuestras hipótesis?",
+            "¿A qué crees que se debe?",
+            "¿Qué hemos aprendido en esta actividad?",
+            "¿Hemos conseguido que la moneda caiga dentro del vaso en el primer intento?",
+            "¿Y en los sucesivos?",
+            "¿A qué se debe esto?"
+        ],
+        "desarrollo_galileo": [
+            "Vamos a explorar cómo nuestros ojos y cerebro trabajan juntos para ayudarnos a calcular distancias.",
+            "¿Qué ocurre cuando usamos solo un ojo en lugar de los dos? Vamos a descubrirlo.",
+            "Formamos parejas y comenzamos el experimento. ¡Vamos allá!"
+        ],
+        "descripcion": "En esta actividad vamos a taparnos un ojo e intentar colar una moneda dentro de un vaso acercándonos a éste y luego dejándola caer.",
+        "explicacion": "Al estar separados, cada ojo lo ve todo desde un ángulo ligeramente diferente. De modo que las imágenes que capta el cerebro procedentes de cada ojo difieren un poco entre sí. Comparando la imagen que recibe de un ojo y del otro, el cerebro puede ofrecer una panorámica tridimensional que ayuda a evaluar las distancias. Es lo que se denomina visión estereoscópica. Al taparnos un ojo, eliminamos la visión estereoscópica y vemos las cosas en dos dimensiones, como en una fotografía, dificultando la apreciación de las distancias. Luego, al ir repitiendo la experiencia varias veces se deberían mejorar los resultados, y es que el cerebro humano es capaz de aprender e ir adaptándose y aprende a estimar las distancias a pesar de contar con un solo ojo.",
+        "nivel_educativo": "Primaria",
+        "desarrollo": [
+            "Paso 1: Nos dividimos por parejas.",
+            "Paso 2: Un miembro de la pareja toma una moneda y se aleja unos 3 metros.",
+            "Paso 3: El otro miembro de la pareja sostiene un vaso a media altura.",
+            "Paso 4: El miembro que tiene la moneda, se tapa un ojo con la mano libre y se acerca al otro.",
+            "Paso 5: Cuando lo considere oportuno, soltará la moneda para que caiga dentro del vaso.",
+            "Paso 6: Se intercambian los roles.",
+            "Paso 7: Se repiten todos los pasos en numerosas ocasiones."
+        ],
+        "trimestre": 1
+    },
+    "actividad005": {
+        "conclusion_galileo": [
+            "La sensibilidad de la piel y nuestro tacto dependen de diversos factores, como la zona del cuerpo, que estemos mirando, etc.",
+            "El antebrazo es una zona donde la piel no es especialmente sensible, por lo que nos cuesta determinar cuándo la pluma llega a la altura de la flexura.",
+            "Cuando miramos, el cerebro recibe información adicional, lo que le permite saber mucho mejor en qué zona está la pluma (¡aparte de que la estamos viendo!).",
+            "No obstante, en general nuestros sentidos se agudizan cuando cerramos los ojos, pues el cerebro puede dedicar más recursos a los sentidos que quedan activos.",
+            "En este caso es diferente porque no sólo tenemos los ojos abiertos, sino que estamos mirando al lugar donde está la pluma, lo que hace que el cerebro reciba más información.",
+            "En el caso del clip en forma de “U”, depende de la zona del cuerpo en la que nos pinchen, distinguiremos si lo hacen con una o dos puntas.",
+            "El número de terminaciones nerviosas en nuestra piel no es igual en todas las partes del cuerpo.",
+            "Aquellas en las que el tacto es muy importante (los dedos, las manos,…) es muy fácil determinar si nos pinchan con una o dos puntas, sin embargo, en las zonas donde el tacto pasa a un segundo plano (como las piernas) sólo podemos notar que existe contacto, pero no diferenciar si se trata de una o dos puntas, pues el número de terminaciones nerviosas es mucho menor."
+        ],
+        "materiales": [
+            "Una pluma o cualquier otro objeto suave",
+            "Un clip"
+        ],
+        "preguntas_finales": [
+            "¿Qué ha ocurrido?",
+            "¿Se han cumplido nuestras hipótesis?",
+            "¿A qué crees que se debe?",
+            "¿Qué hemos aprendido en esta actividad?",
+            "¿Podemos determinar con facilidad cuándo la pluma ha llegado a la flexura del codo?",
+            "¿Cambian las cosas al tener los ojos abiertos?",
+            "¿Por qué?",
+            "¿Podemos determinar cuándo nos pinchan con una o dos puntas del clip?",
+            "¿Depende de la zona?",
+            "¿Por qué?"
+        ],
+        "titulo": "Ahora uno, ahora dos",
+        "trimestre": 1,
+        "grupo": "primaria1",
+        "numero_actividad": "Actividad 1.5",
+        "introduccion_galileo": [
+            "¿Sabías que nuestra piel no es igual de sensible en todas sus partes?",
+            "Hoy vamos a descubrir cómo percibimos el tacto y cómo diferentes partes de nuestro cuerpo responden a estímulos.",
+            "Prepara una pluma y un clip y comencemos el experimento."
+        ],
+        "explicacion": "La sensibilidad de la piel y nuestro tacto dependen de diversos factores, como la zona del cuerpo, que estemos mirando, etc. El antebrazo es una zona donde la piel no es especialmente sensible, por lo que nos cuesta determinar cuándo la pluma llega a la altura de la flexura. Cuando miramos, el cerebro recibe información adicional, lo que le permite saber mucho mejor en qué zona está la pluma (¡aparte de que la estamos viendo!). No obstante, en general nuestros sentidos se agudizan cuando cerramos los ojos, pues el cerebro puede dedicar más recursos a los sentidos que quedan activos. En este caso es diferente porque no sólo tenemos los ojos abiertos, sino que estamos mirando al lugar donde está la pluma, lo que hace que el cerebro reciba más información. En el caso del clip en forma de “U”, depende de la zona del cuerpo en la que nos pinchen, distinguiremos si lo hacen con una o dos puntas. El número de terminaciones nerviosas en nuestra piel no es igual en todas las partes del cuerpo. Aquellas en las que el tacto es muy importante (los dedos, las manos,…) es muy fácil determinar si nos pinchan con una o dos puntas, sin embargo, en las zonas donde el tacto pasa a un segundo plano (como las piernas) sólo podemos notar que existe contacto, pero no diferenciar si se trata de una o dos puntas, pues el número de terminaciones nerviosas es mucho menor.",
+        "nivel_educativo": "Primaria",
+        "descripcion": "En esta actividad vamos a intentar determinar cuando una pluma llega a la flexura del codo (el lado opuesto del codo) cuando otra persona va recorriendo nuestro brazo con la pluma. Luego, intentaremos determinar si nos están pinchando en uno o dos sitios a la vez.",
+        "preguntas_iniciales": [
+            "¿A través de qué órgano percibimos el tacto?",
+            "¿Es la piel igual de sensible en todos sus puntos?",
+            "¿Cambia nuestra sensibilidad en la piel cuando cerramos los ojos?",
+            "¿Por qué?"
+        ],
+        "desarrollo": [
+            "Paso 1: Nos dividimos por parejas.",
+            "Paso 2: Un miembro de la pareja toma una pluma (o pañuelo o similar), mientras que el otro miembro extiende perfectamente su brazo y cierra los ojos. Es muy importante que el brazo esté totalmente extendido, sin ninguna flexión en el codo.",
+            "Paso 3: El miembro que tiene la pluma empezará a recorrer lentamente el brazo de su compañero con la pluma, empezando por la muñeca y dirigiéndose a la flexura del codo.",
+            "Paso 4: El miembro con los ojos cerrados deberá decir ¡ya! cuando crea que su compañero a llegado a la flexura.",
+            "Paso 5: Se repite la experiencia intercambiando los roles.",
+            "Paso 6: Se vuelven a repetir los pasos del 1 al 5, pero en esta ocasión con los ojos abiertos.",
+            "Paso 7: Tomaos un clip por pareja, y lo abrimos para formar con él una “U”. Es importante que la “U” sea simétrica y no tenga una pata más larga que la otra.",
+            "Paso 8: Un miembro del equipo cierra los ojos.",
+            "Paso 9: El otro miembro pinchará suavemente al que tiene los ojos cerrados en diferentes puntos del cuerpo: el brazo, la mano, la yema de los dedos, las mejillas, la pierna, etc. Pero en algunas ocasiones lo hará con las dos puntas del clip y en otras lo hará sólo con una punta.",
+            "Paso 10: Se intercambian los roles y se repite el paso 9."
+        ],
+        "imagenes": [
+            ""
+        ],
+        "desarrollo_galileo": [
+            "Vamos a explorar cómo percibimos el tacto y cómo nuestra piel responde a diferentes estímulos.",
+            "¿Es nuestra piel igual de sensible en todas sus partes? Vamos a averiguarlo.",
+            "Formamos parejas y comenzamos el experimento. ¡Vamos allá!"
+        ]
+    },
+    "actividad006": {
+        "materiales": [
+            "Purpurina de varios colores",
+            "Un par de guantes desechables de adulto"
+        ],
+        "desarrollo": [
+            "Paso 1: Tomamos varios botes de purpurina de diferentes colores.",
+            "Paso 2: Dividimos a la clase en el grupo de “contagiados” (5-6 alumnos) y el de personas libres del germen (el resto de la clase más el maestro o maestra).",
+            "Paso 3: Los miembros del grupo de los contagiados, se echarán purpurina en sus manos. Cada miembro de un solo color (aunque haya más de un miembro con el mismo color).",
+            "Paso 4: El maestro o maestra se pone los guantes desechables.",
+            "Paso 5: Todos los alumnos y el maestro o maestra se empiezan a dar las manos entre sí durante unos minutos, procurando darle la mano al mayor número de personas posibles, incluso repitiendo a quién le damos la mano.",
+            "Paso 6: Todos nos miramos las manos para ver si tenemos purpurina en ellas y de qué color o colores.",
+            "Paso 7: El maestro o maestra muestra si sus guantes tienen también purpurina.",
+            "Paso 8: Se quita los guantes cuidadosamente y muestra si en sus manos también hay restos de purpurina."
+        ],
+        "preguntas_finales": [
+            "¿Qué ha ocurrido?",
+            "¿Se han cumplido nuestras hipótesis?",
+            "¿A qué crees que se debe?",
+            "¿Qué hemos aprendido en esta actividad?",
+            "¿Cómo se propagan los gérmenes?",
+            "¿Hay otras maneras en que se pueden propagar?",
+            "¿Son efectivos los guantes para evitar infecciones?"
+        ],
+        "explicacion": "Los gérmenes son seres microscópicos que no podemos ver a simple vista, y sin embargo están ahí. En esta actividad hemos usado purpurina a modo de gérmenes, de manera que se puedan ver y comprendamos mejor la manera en que se propagan. Al darnos las manos, parte de la purpurina va pasando de mano en mano hasta que todos acabamos “contagiados” por el germen. Podemos ver, además, que aunque la purpurina comenzó siendo de un único color por contagiado, al final todos tenemos purpurina de todos los colores. En el caso del maestro o maestra, su guante también presentará purpurina de todos los colores, pero al quitárselo, las manos están libre de gérmenes.",
+        "trimestre": 1,
+        "preguntas_iniciales": [
+            "¿Qué son los gérmenes?",
+            "¿Podemos verlos?",
+            "¿Cómo se propagan de unas personas a otras?",
+            "¿Hay más de una manera de que esto ocurra?"
+        ],
+        "introduccion_galileo": [
+            "¿Qué son los gérmenes y cómo se propagan?",
+            "Hoy vamos a utilizar purpurina para comprender mejor cómo se propagan los gérmenes.",
+            "Prepara tus manos y comencemos el experimento."
+        ],
+        "descripcion": "En esta actividad vamos a poner purpurina de colores en nuestras manos. A continuación, nos iremos dando la mano unos a otros.",
+        "conclusion_galileo": [
+            "Los gérmenes son seres microscópicos que no podemos ver a simple vista, y sin embargo están ahí.",
+            "En esta actividad hemos usado purpurina a modo de gérmenes, de manera que se puedan ver y comprendamos mejor la manera en que se propagan.",
+            "Al darnos las manos, parte de la purpurina va pasando de mano en mano hasta que todos acabamos “contagiados” por el germen.",
+            "Podemos ver, además, que aunque la purpurina comenzó siendo de un único color por contagiado, al final todos tenemos purpurina de todos los colores.",
+            "En el caso del maestro o maestra, su guante también presentará purpurina de todos los colores, pero al quitárselo, las manos están libre de gérmenes."
+        ],
+        "grupo": "primaria1",
+        "numero_actividad": "Actividad 1.6",
+        "imagenes": [
+            ""
+        ],
+        "desarrollo_galileo": [
+            "Vamos a explorar cómo se propagan los gérmenes utilizando purpurina como ejemplo.",
+            "¿Sabías que los gérmenes se pueden propagar muy fácilmente? Vamos a descubrir cómo.",
+            "Formamos grupos y comenzamos el experimento. ¡Vamos allá!"
+        ],
+        "titulo": "La propagación de los gérmenes",
+        "nivel_educativo": "Primaria"
+    },
+    "actividad007": {
+        "preguntas_finales": [
+            "¿Qué ha ocurrido?",
+            "¿Se han cumplido nuestras hipótesis?",
+            "¿A qué crees que se debe?",
+            "¿Qué hemos aprendido en esta actividad?",
+            "¿Qué ha ocurrido con las manzanas del primer bote?",
+            "¿Y con las del segundo?",
+            "¿A qué se debe?"
+        ],
+        "explicacion": "Los gérmenes abundan por todos lados, de ahí que sea tan importante mantener una buena higiene. En el caso del primer bote con manzanas, éstas irán secándose poco a poco y empeorando su aspecto, pero si, además, las manoseamos con las manos bien sucias (después de pasarlas por paredes, suelo, etc.) haremos que se llenen de gérmenes, por lo que con el paso del tiempo adquirirán pero aspecto que las otras manzanas.",
+        "titulo": "Manos relucientes, por favor",
+        "trimestre": 2,
+        "nivel_educativo": "Primaria",
+        "imagenes": [
+            ""
+        ],
+        "preguntas_iniciales": [
+            "¿Cómo y por qué nos infectamos?",
+            "¿Es posible evitarlo?",
+            "¿Por qué es importante tener las manos siempre limpias?",
+            "¿Cómo podemos comprobarlo?"
+        ],
+        "grupo": "primaria1",
+        "desarrollo": [
+            "Paso 1: Nos lavamos concienzudamente las manos con agua y jabón.",
+            "Paso 2: Tomamos una manzana.",
+            "Paso 3: Con ayuda de un cuchillo recién lavado (a manipular sólo por el maestro o maestra), cortamos la manzana en varios trozos.",
+            "Paso 4: Guardamos en un bote la mitad de los trozos de manzana y cerramos el bote.",
+            "Paso 5: Nos ensuciamos las manos lo máximo posible tocando el suelo, paredes, la suela de nuestros zapatos, etc.",
+            "Paso 6: Manoseamos bien los trozos de manzana restantes.",
+            "Paso 7: Los guardamos en otro bote y lo cerramos.",
+            "Paso 8: Volvemos a lavarnos concienzudamente las manos.",
+            "Paso 9: Esperamos varios días prestando atención a cómo evolucionan las manzanas de uno y otro bote."
+        ],
+        "introduccion_galileo": [
+            "¿Por qué es importante tener las manos limpias?",
+            "Hoy vamos a descubrir cómo nuestras manos pueden propagar gérmenes y cómo esto afecta a nuestra salud.",
+            "Prepara tus manos y comencemos el experimento."
+        ],
+        "desarrollo_galileo": [
+            "Vamos a explorar la importancia de tener las manos limpias y cómo esto afecta a nuestra salud.",
+            "¿Sabías que los gérmenes se pueden propagar muy fácilmente? Vamos a descubrir cómo.",
+            "Formamos grupos y comenzamos el experimento. ¡Vamos allá!"
+        ],
+        "descripcion": "En esta actividad vamos a ensuciarnos todo lo posible las manos y luego cortar unos trozos de manzana, los manosearemos y los guardaremos en un bote cerrado. Haremos ahora lo mismo, pero con las manos totalmente limpias.",
+        "materiales": [
+            "2 botes con tapadera",
+            "Jabón",
+            "Agua",
+            "Manzanas",
+            "Cuchillo"
+        ],
+        "numero_actividad": "Actividad 2.1",
+        "conclusion_galileo": [
+            "Los gérmenes abundan por todos lados, de ahí que sea tan importante mantener una buena higiene.",
+            "En el caso del primer bote con manzanas, éstas irán secándose poco a poco y empeorando su aspecto.",
+            "Si, además, las manoseamos con las manos bien sucias (después de pasarlas por paredes, suelo, etc.) haremos que se llenen de gérmenes, por lo que con el paso del tiempo adquirirán pero aspecto que las otras manzanas."
+        ]
+    },
+    "actividad008": {
+        "desarrollo_galileo": [
+            "Vamos a explorar cómo diferentes sustancias afectan a los huesos.",
+            "¿Qué ocurre cuando sumergimos huesos en vinagre durante varios días? Vamos a descubrirlo.",
+            "Preparamos los huesos y el vinagre y comenzamos el experimento. ¡Vamos allá!"
+        ],
+        "trimestre": 2,
+        "explicacion": "Cuando sumergimos los huesos en vinagre no ocurre nada especial, pero con el paso de los días, el ácido acético del vinagre reacciona con el carbonato cálcico de los huesos y los reblandece, de manera que ahora parecen de goma. Esto no debe llevarnos a pensar que tomar vinagre es malo, ya que éste no entra en contacto con nuestros huesos, pero sí nos puede ayudar a entender por qué es tan importante cuidar la alimentación, pues todo lo que ocurre dentro de nuestro cuerpo depende de nuestra alimentación y de cómo estos alimentos interactúan con nuestro organismo.",
+        "grupo": "primaria1",
+        "nivel_educativo": "Primaria",
+        "desarrollo": [
+            "Paso 1: Tomamos unos huesos de pollo.",
+            "Paso 2: Los introducimos en un tarro o recipiente con tapadera.",
+            "Paso 3: Vertemos vinagre hasta que los huesos queden totalmente cubiertos.",
+            "Paso 4: Observamos si notamos algún cambio en los huesos.",
+            "Paso 5: Esperamos 24 horas y observamos si notamos algún cambio en los huesos.",
+            "Paso 6: Esperamos una semana (en función de los huesos elegidos podrían ser incluso 2 o 3 semanas).",
+            "Paso 7: Sacamos los huesos del vinagre y los secamos.",
+            "Paso 8: Probamos a doblar los huesos."
+        ],
+        "numero_actividad": "Actividad 2.2",
+        "conclusion_galileo": [
+            "Cuando sumergimos los huesos en vinagre no ocurre nada especial, pero con el paso de los días, el ácido acético del vinagre reacciona con el carbonato cálcico de los huesos y los reblandece, de manera que ahora parecen de goma.",
+            "Esto no debe llevarnos a pensar que tomar vinagre es malo, ya que éste no entra en contacto con nuestros huesos, pero sí nos puede ayudar a entender por qué es tan importante cuidar la alimentación, pues todo lo que ocurre dentro de nuestro cuerpo depende de nuestra alimentación y de cómo estos alimentos interactúan con nuestro organismo."
+        ],
+        "descripcion": "En esta actividad vamos a sumergir unos huesos de pollo en vinagre durante varios días.",
+        "materiales": [
+            "Huesos de pollo limpios",
+            "Vinagre",
+            "Un tarro o recipiente con tapadera"
+        ],
+        "preguntas_finales": [
+            "¿Qué ha ocurrido?",
+            "¿Se han cumplido nuestras hipótesis?",
+            "¿A qué crees que se debe?",
+            "¿Qué hemos aprendido en esta actividad?",
+            "¿Qué les ha ocurrido a los huesos?",
+            "¿Por qué?",
+            "¿Por qué es importante cuidar nuestra alimentación?"
+        ],
+        "preguntas_iniciales": [
+            "¿Es importante cuidar nuestra alimentación?",
+            "¿Por qué?",
+            "¿Qué ocurre si metemos unos huesos de pollo en vinagre?",
+            "¿Y si los dejamos sumergidos en vinagre durante unos días?",
+            "¿A qué se debe?"
+        ],
+        "introduccion_galileo": [
+            "¿Sabías que diferentes sustancias pueden afectar a nuestros huesos?",
+            "Hoy vamos a descubrir cómo el vinagre afecta a los huesos sumergiéndolos durante varios días.",
+            "Prepara los materiales y comencemos el experimento."
+        ],
+        "imagenes": [
+            ""
+        ],
+        "titulo": "Huesos de goma"
+    },
+    "actividad009": {
+        "preguntas_finales": [
+            "¿Qué ha ocurrido?",
+            "¿Se han cumplido nuestras hipótesis?",
+            "¿A qué crees que se debe?",
+            "¿Qué hemos aprendido en esta actividad?",
+            "¿Qué ocurre cuando se mezcla el vinagre y el bicarbonato?",
+            "¿Qué le ocurre al globo?",
+            "¿Por qué?"
+        ],
+        "desarrollo": [
+            "Paso 1: Tomamos una botella de 500 ml vacía.",
+            "Paso 2: Vertemos en su interior uno o dos dedos de vinagre.",
+            "Paso 3: Tomamos un guante de látex o vinilo.",
+            "Paso 4: Vertemos en su interior 2 o 3 cucharadas de bicarbonato sódico.",
+            "Paso 5: Con muchísimo cuidado de que el bicarbonato no caiga al interior de la botella, ponemos el orificio del guante en la boca de la botella.",
+            "Paso 6: Sujetamos firmemente el guante con una mano alrededor de la boca de la botella, de manera que no puede escapar nada de aire.",
+            "Paso 7: Con la otra mano, levantamos el guante para que el bicarbonato caiga en el interior de la botella.",
+            "Paso 8: Esperamos un minuto sin dejar de sostener firmemente el guante alrededor de la boca de la botella."
+        ],
+        "materiales": [
+            "Botellas de agua pequeñas (de 500 ml) vacías",
+            "Guantes de látex o vinilo",
+            "Vinagre",
+            "Bicarbonato",
+            "Cucharillas"
+        ],
+        "introduccion_galileo": [
+            "¿Sabías que mezclar diferentes sustancias puede causar reacciones interesantes?",
+            "Hoy vamos a descubrir qué ocurre cuando mezclamos vinagre y bicarbonato.",
+            "Vamos a preparar los materiales. ¡Vamos alla!"
+        ],
+        "trimestre": 2,
+        "conclusion_galileo": [
+            "El vinagre es un líquido que contiene un ácido (el ácido acético), el bicarbonato es un sólido (que contiene carbonato), cuando el ácido acético entra en contacto con el carbonato, tiene lugar una reacción química que libera CO2, es decir, un gas.",
+            "Los gases ocupan más volumen que los sólidos y que los líquidos, es este aumento de volumen el que hace que el globo se infle."
+        ],
+        "desarrollo_galileo": [
+            "Vamos a explorar qué ocurre cuando mezclamos vinagre y bicarbonato.",
+            "¿Qué tipo de reacción ocurre y qué podemos observar? Vamos a descubrirlo.",
+            "Preparamos los materiales y comenzamos el experimento. ¡Vamos allá!"
+        ],
+        "nivel_educativo": "Primaria",
+        "explicacion": "El vinagre es un líquido que contiene un ácido (el ácido acético), el bicarbonato es un sólido (que contiene carbonato), cuando el ácido acético entra en contacto con el carbonato, tiene lugar una reacción química que libera CO2, es decir, un gas. Los gases ocupan más volumen que los sólidos y que los líquidos, es este aumento de volumen el que hace que el globo se infle.",
+        "numero_actividad": "Actividad 2.3",
+        "descripcion": "En esta actividad vamos a verter vinagre en el interior de una botella y bicarbonato en el interior de un guante. Luego fijaremos el guante a la boca de la botella y, finalmente, dejaremos que el bicarbonato caiga en el interior de la botella para que reaccione con el vinagre.",
+        "titulo": "La mano loca",
+        "preguntas_iniciales": [
+            "¿Qué es un sólido?",
+            "¿Qué es un líquido?",
+            "¿Cómo es el vinagre?",
+            "¿Y el bicarbonato?",
+            "¿Qué ocurre si mezclamos vinagre y bicarbonato?",
+            "Al mezclarlos ¿obtenemos un líquido, sólido o gas?"
+        ],
+        "imagenes": [
+            ""
+        ],
+        "grupo": "primaria1"
+    },
+    "actividad010": {
+        "materiales": [
+            "Recipiente tipo tupper transparente",
+            "Cinta adhesiva",
+            "Agua",
+            "Restos de comida (pan, verdura, fruta, queso,…). No utilizar carne ni pescado",
+            "Cuchillo de plástico",
+            "Tabla de cortar"
+        ],
+        "introduccion_galileo": [
+            "¿Sabías que el moho es un tipo de hongo que puede crecer en diferentes condiciones?",
+            "Hoy vamos a descubrir cómo se desarrolla el moho en diferentes alimentos.",
+            "Prepara los materiales y comencemos el experimento."
+        ],
+        "explicacion": "El moho es un hongo (es decir, un tipo de ser vivo) que se encuentra tanto al aire libre como en lugares húmedos y con baja luminosidad. Aunque no podamos ver sus esporas (las “semillas” de los hongos), éstas se encuentran en el ambiente, dispersándose a través del aire, aunque no podemos verlas ya que son microscópicas. Los hongos requieren para crecer ambientes húmedos y poco luminosos, por eso humedecimos los alimentos antes de introducirlos en el recipiente y luego los pusimos en un lugar alejado de la luz directa del sol. De esta manera, los hongos encuentran su lugar ideal para crecer: humedad, poca luz y alimento. A los pocos días, veremos cómo empiezan a surgir unas manchas verdes sobre los alimentos (el moho) y conforme avanzan los días estas manchas van creciendo.",
+        "imagenes": [
+            ""
+        ],
+        "trimestre": 2,
+        "titulo": "Mohomanía",
+        "desarrollo": [
+            "Paso 1: Preparamos una serie de alimentos, como pan y frutas.",
+            "Paso 2: Los ponemos sobre una tabla.",
+            "Paso 3: Con ayuda de un cuchillo de plástico, los cortamos en trozos pequeños.",
+            "Paso 4: Los mojamos para que estén húmedos.",
+            "Paso 5: Los introducimos dentro de un recipiente transparente.",
+            "Paso 6: Tapamos el recipiente y, además, lo sellamos con cinta adhesiva.",
+            "Paso 7: Colocamos los recipientes en algún lugar poco luminoso, alejado de la luz directa del sol.",
+            "Paso 8: Esperamos varias semanas prestando atención todos los días a la evolución de lo que ocurre dentro del tarro.",
+            "Paso 9: Tiramos a la basura todos los recipientes sin abrirlos, para que las esporas del moho no se esparzan por todos sitios."
+        ],
+        "descripcion": "En esta actividad vamos a introducir algunos restos de comido, previamente humedecidos, en un recipiente que sellaremos, luego esperaremos unas semanas.",
+        "numero_actividad": "Actividad 2.4",
+        "nivel_educativo": "Primaria",
+        "desarrollo_galileo": [
+            "Vamos a explorar cómo se desarrolla el moho en diferentes alimentos.",
+            "¿Qué ocurre cuando dejamos alimentos en un ambiente húmedo y cerrado? Vamos a descubrirlo.",
+            "Preparamos los materiales y comenzamos el experimento. ¡Vamos allá!"
+        ],
+        "preguntas_finales": [
+            "¿Qué ha ocurrido?",
+            "¿Se han cumplido nuestras hipótesis?",
+            "¿A qué crees que se debe?",
+            "¿Qué hemos aprendido en esta actividad?",
+            "¿Qué les ha ocurrido a los alimentos?",
+            "¿De dónde ha salido el moho?",
+            "¿Por qué humedecimos los alimentos antes de introducirlos en el recipiente?",
+            "¿Por qué colocamos los recipientes en un lugar poco luminoso?"
+        ],
+        "grupo": "primaria1",
+        "conclusion_galileo": [
+            "El moho es un hongo (es decir, un tipo de ser vivo) que se encuentra tanto al aire libre como en lugares húmedos y con baja luminosidad.",
+            "Aunque no podamos ver sus esporas (las “semillas” de los hongos), éstas se encuentran en el ambiente, dispersándose a través del aire, aunque no podemos verlas ya que son microscópicas.",
+            "Los hongos requieren para crecer ambientes húmedos y poco luminosos, por eso humedecimos los alimentos antes de introducirlos en el recipiente y luego los pusimos en un lugar alejado de la luz directa del sol.",
+            "De esta manera, los hongos encuentran su lugar ideal para crecer: humedad, poca luz y alimento.",
+            "A los pocos días, veremos cómo empiezan a surgir unas manchas verdes sobre los alimentos (el moho) y conforme avanzan los días estas manchas van creciendo."
+        ],
+        "preguntas_iniciales": [
+            "¿Qué tipos de seres vivos conoces?",
+            "¿Has oído hablar del moho?",
+            "¿Qué es el moho?",
+            "¿Dónde y cuándo aparece?",
+            "¿Qué condiciones necesitan para crecer?"
+        ]
+    }
+}
