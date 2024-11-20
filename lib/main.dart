@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:design_galileo/pages/alumno_page.dart';
+import 'package:flutter/material.dart';
+import 'package:design_galileo/pages/homepage.dart';
+// import 'package:design_galileo/pages/alumno_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +18,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: const AlumnoPage(),
+      home: const HomePage(),
+      // home: const AlumnoPage(),
     );
   }
 }

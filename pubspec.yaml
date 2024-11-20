@@ -33,6 +33,7 @@ flutter:
     - assets/images/galileo/
     - assets/images/icons/
     - assets/images/examples/
+    - assets/images/aula/
     - assets/actividades.json
   fonts:
     - family: ChalkFont
