@@ -14,11 +14,12 @@ dependencies:
   # Utilizad este espacio para agregar las dependencias de Rive o cualquier otra que utilicéis
   rive: ^0.13.14
   cupertino_icons: ^1.0.6
-  just_audio: ^0.9.30
+  just_audio: ^0.9.42
   path_provider: ^2.0.11
-  http: ^0.13.4
+  http: ^1.2.2
   flutter_tts: ^4.1.0
   js: ^0.6.3
+  flutter_dotenv: ^5.2.1
 
 dev_dependencies:
   flutter_test:
@@ -29,6 +30,7 @@ flutter:
   uses-material-design: true
   # Aquí para las utilidades o assets que se agregen, animaciones, etc.
   assets:
+    - .env
     - assets/images/avataralumnos/
     - assets/images/galileo/
     - assets/images/icons/

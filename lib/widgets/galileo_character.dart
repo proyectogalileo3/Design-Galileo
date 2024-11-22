@@ -68,6 +68,10 @@ class GalileoCharacterState extends State<GalileoCharacter> {
     });
   }
 
+  void startSpeaking() {
+    _galileoCharacterController.toggleSpeaking();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Positioned(

@@ -4,6 +4,7 @@ import 'package:rive/rive.dart';
 class GalileoCharacterController {
   Artboard? _riveArtboard;
   SMIBool? isWalking;
+  SMIBool? isSpeaking;
 
   Artboard? get artboard => _riveArtboard;
 
@@ -20,6 +21,7 @@ class GalileoCharacterController {
     if (controller != null) {
       artboard.addController(controller);
       isWalking = controller.findInput<bool>('isWalking') as SMIBool?;
+      isSpeaking = controller.findInput<bool>('isSpeaking') as SMIBool?;
     }
 
     _riveArtboard = artboard;
@@ -28,6 +30,12 @@ class GalileoCharacterController {
   void toggleWalking() {
     if (isWalking != null) {
       isWalking!.value = !isWalking!.value;
+    }
+  }
+
+  void toggleSpeaking() {
+    if (isSpeaking != null) {
+      isSpeaking!.value = !isSpeaking!.value;
     }
   }
 }

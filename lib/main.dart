@@ -1,9 +1,13 @@
-import 'package:design_galileo/pages/alumno_page.dart';
 import 'package:flutter/material.dart';
 import 'package:design_galileo/pages/homepage.dart';
 // import 'package:design_galileo/pages/alumno_page.dart';
 
-void main() {
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+String elevenlabsAPIKey = dotenv.env['ELEVENLABS_API_KEY'] as String;
+
+Future main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
