@@ -1,12 +1,11 @@
 import 'dart:convert';
-
 import 'package:design_galileo/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart';
-
 import 'package:design_galileo/widgets/galileo_character.dart';
+import 'quiz_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,18 +14,25 @@ class HomePage extends StatefulWidget {
   HomePageState createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late Map<String, Actividad> actividades;
 
   final player = AudioPlayer();
 
-  final GlobalKey<GalileoCharacterState> galileoKey =
-      GlobalKey<GalileoCharacterState>();
+  bool isDarkBackground = false; // Oscurecer fondo al inicio
+  bool showGalileo = false; // Mostrar a Galileo
+  bool showInteractivePizarra = false; // Mostrar la pizarra interactiva
+  bool showButtons = false; // Mostrar los 4 botones al presionar "Empezar"
+  bool showSpeakButton = true; // Mostrar el botón de hablar antes de hablar
+  int buttonStage = 0; // Estado de habilitación de botones (uno por uno)
+  bool quizActivated = false; // Estado del botón de quiz activado
+  bool autoevaluationActivated = false; // Estado del botón de autoevaluación activado
 
   @override
   void initState() {
     super.initState();
     cargarActividades();
+    _startSequence(); // Iniciar la secuencia inicial
   }
 
   Future<void> cargarActividades() async {
@@ -42,9 +48,9 @@ class HomePageState extends State<HomePage> {
   }
 
   Future<void> playTextToSpeech(String text) async {
-    String voiceBill = 'pqHfZKP75CvOlQylNhV4';
+    const voiceBill = 'pqHfZKP75CvOlQylNhV4'; // ID de la voz
+    const url = 'https://api.elevenlabs.io/v1/text-to-speech/$voiceBill';
 
-    String url = 'https://api.elevenlabs.io/v1/text-to-speech/$voiceBill';
     final response = await http.post(
       Uri.parse(url),
       headers: {
@@ -63,13 +69,54 @@ class HomePageState extends State<HomePage> {
     );
 
     if (response.statusCode == 200) {
-      final bytes = response.bodyBytes; //get the bytes ElevenLabs sent back
-      await player.setAudioSource(AudioSource(
-          bytes)); //send the bytes to be read from the JustAudio library
-      player.play(); //play the audio
+      final bytes = response.bodyBytes;
+      await player.setAudioSource(AudioSource(bytes));
+      player.play();
     } else {
-      // throw Exception('Failed to load audio');
-      return;
+      print('Error al generar audio: ${response.body}');
+    }
+  }
+
+  Future<void> _startSequence() async {
+    // Mostrar Galileo después de 2 segundos con fondo oscuro
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      isDarkBackground = true;
+      showGalileo = true;
+      showSpeakButton = true;
+    });
+  }
+
+  Future<void> onSpeakButtonPressed() async {
+    setState(() {
+      showSpeakButton = false; // Ocultar el botón de hablar
+    });
+    // Galileo habla
+    await playTextToSpeech(
+        "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
+    await Future.delayed(const Duration(seconds: 5)); // Simular tiempo de habla
+
+    // Mostrar pizarra interactiva después de hablar
+    setState(() {
+      isDarkBackground = false;
+      showGalileo = false;
+      showInteractivePizarra = true;
+    });
+  }
+
+  void onEmpezarPressed() {
+    setState(() {
+      showButtons = true;
+    });
+    _animateButtons(); // Animar la aparición de los botones
+  }
+
+  Future<void> _animateButtons() async {
+    for (int i = 0; i < 2; i++) {
+      await Future.delayed(const Duration(milliseconds: 500));
+      setState(() {
+        buttonStage = i + 1; // Habilitar botones en secuencia
+      });
     }
   }
 
@@ -77,182 +124,210 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
     final currentHeight = MediaQuery.of(context).size.height;
-    // final screenSize = MediaQuery.of(context).size;
-
     double lateralButtonsHeight = 360;
 
     return Scaffold(
-        body: Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/aula/fondo_aula.png'),
-              fit: BoxFit.cover)),
-      child: Stack(
+      body: Stack(
         children: [
-          Row(
-            children: [
-              Expanded(
+          // Fondo principal
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/aula/fondo_aula.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // Fondo oscuro
+          if (isDarkBackground)
+            Positioned.fill(
+              child: Container(color: Colors.black.withOpacity(0.6)),
+            ),
+          // Galileo animado
+          if (showGalileo)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const GalileoCharacter(
+                    sizeX: 800,
+                    sizeY: 800,
+                    posX: 800,
+                  ),
+                  if (showSpeakButton) // Botón de hablar
+                    ElevatedButton(
+                      onPressed: onSpeakButtonPressed,
+                      child: const Text("Hablar"),
+                    ),
+                  if (!showSpeakButton) // Cuadro de texto con el mensaje de Galileo
+                    Container(
+                      margin: const EdgeInsets.only(top: 16),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.black, width: 2),
+                      ),
+                      child: const Text(
+                        "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          // Pizarra interactiva
+          if (showInteractivePizarra)
+            Positioned(
+              top: currentHeight * 0.1,
+              left: currentWidth * 0.1,
+              child: Container(
+                height: currentHeight * 0.75,
+                width: currentWidth * 0.8,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/aula/pizarra.png'),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 131.0, bottom: 180.0, left: 86.0, right: 86.0),
+                  child: ListView.builder(
+                    itemCount: actividades.length,
+                    itemBuilder: (context, index) {
+                      final actividad = actividades.values.elementAt(index);
+                      return ExpansionTile(
+                        title: Text(
+                          actividad.numeroActividad,
+                          style: const TextStyle(
+                              fontSize: 36,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          actividad.titulo,
+                          style: const TextStyle(
+                              fontSize: 32, color: Colors.white),
+                        ),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 8.0),
+                            child: Text(
+                              actividad.descripcion,
+                              style: const TextStyle(
+                                  fontSize: 24, color: Colors.white),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 16.0, bottom: 8.0),
+                              child: ElevatedButton(
+                                onPressed: onEmpezarPressed,
+                                child: const Text('Empezar'),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          // Botones laterales
+          if (showButtons)
+            Row(
+              children: [
+                Expanded(
                   flex: 1,
                   child: Column(
                     children: [
-                      Expanded(
-                          child: Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: lateralButtonsHeight * 1.2,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/aula/materiales.png'),
-                                  fit: BoxFit.contain)),
-                        ),
-                      )),
-                      Expanded(
-                          child: Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: lateralButtonsHeight,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/aula/quiz.png'),
-                                  fit: BoxFit.contain)),
-                        ),
-                      )),
+                      _buildSideButton(
+                        'assets/images/aula/materiales.png',
+                        lateralButtonsHeight * 1.2,
+                        buttonStage > 0,
+                      ),
+                      _buildSideButton(
+                        'assets/images/aula/autoevaluacion.png',
+                        lateralButtonsHeight,
+                        autoevaluationActivated,
+                      ),
                     ],
-                  )),
-              Expanded(
+                  ),
+                ),
+                Expanded(
                   flex: 2,
-                  child: Column(
-                    children: [
-                      Expanded(
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: currentHeight * 0.75,
-                                  decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/aula/pizarra.png'),
-                                          fit: BoxFit.contain)),
-                                  child: Padding(
-                                    // padding: const EdgeInsets.symmetric(
-                                    //     vertical: 130.0, horizontal: 96.0),
-                                    padding: const EdgeInsets.only(
-                                        top: 131.0,
-                                        bottom: 180.0,
-                                        left: 96.0,
-                                        right: 96.0),
-                                    child: Expanded(
-                                      child: ListView.builder(
-                                        itemCount: actividades.length,
-                                        itemBuilder: (context, index) {
-                                          final actividad = actividades.values
-                                              .elementAt(index);
-                                          return ExpansionTile(
-                                            title: Text(
-                                              actividad.numeroActividad,
-                                              style: const TextStyle(
-                                                  fontSize: 36,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            subtitle: Text(
-                                              actividad.titulo,
-                                              style: const TextStyle(
-                                                  fontSize: 32,
-                                                  color: Colors.white),
-                                            ),
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 16.0,
-                                                        vertical: 8.0),
-                                                child: Text(
-                                                  actividad.descripcion,
-                                                  style: const TextStyle(
-                                                      fontSize: 24,
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 16.0,
-                                                          bottom: 8.0),
-                                                  child: ElevatedButton(
-                                                    onPressed: () {},
-                                                    child:
-                                                        const Text('Empezar'),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ))),
-                    ],
-                  )),
-              Expanded(
+                  child: SizedBox(
+                    height: lateralButtonsHeight * 1.5,
+                  ),
+                ),
+                Expanded(
                   flex: 1,
                   child: Column(
                     children: [
-                      Expanded(
-                          child: Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: lateralButtonsHeight * 1.1,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/aula/autoevaluacion.png'),
-                                  fit: BoxFit.contain)),
-                        ),
-                      )),
-                      Expanded(
-                          child: Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: lateralButtonsHeight,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/aula/curiosidades.png'),
-                                  fit: BoxFit.contain)),
-                        ),
-                      )),
+                      _buildSideButton(
+                        'assets/images/aula/quiz.png',
+                        lateralButtonsHeight,
+                        quizActivated || buttonStage > 1,
+                      ),
+                      _buildSideButton(
+                        'assets/images/aula/curiosidades.png',
+                        lateralButtonsHeight * 1.2,
+                        false, // Siempre gris por ahora
+                      ),
                     ],
-                  )),
-            ],
-          ),
-          const GalileoCharacter(
-            sizeX: 1000,
-            sizeY: 1000,
-            posX: 800,
-          ),
-          Positioned(
-              bottom: currentHeight * 0.1,
-              left: currentWidth * 0.5,
-              child: ElevatedButton(
-                  onPressed: () {
-                    // galileoKey.currentState?.startSpeaking();
-                    // playTextToSpeech(
-                    //     'Hola, me llamo Galileo. ¡Bienvenido al laboratorio!');
-                  },
-                  child: const Text('Hablar')))
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
-    ));
+    );
+  }
+
+  Widget _buildSideButton(String asset, double height, bool enabled) {
+    return Expanded(
+      child: Align(
+        alignment: Alignment.center,
+        child: GestureDetector(
+          onTap: enabled
+              ? () {
+                  if (asset.contains('quiz')) {
+                    setState(() {
+                      quizActivated = false; // Desactivar quiz
+                      autoevaluationActivated = true; // Activar autoevaluación
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const QuizPage()),
+                    );
+                  }
+                }
+              : null,
+          child: AnimatedScale(
+            scale: enabled ? 1.1 : 1.0,
+            duration: const Duration(milliseconds: 200),
+            child: Opacity(
+              opacity: enabled ? 1.0 : 0.5,
+              child: Container(
+                height: height,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(asset),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -260,35 +335,11 @@ class Actividad {
   final String numeroActividad;
   final String descripcion;
   final String titulo;
-  final String explicacion;
-  final List<String> introduccionGalileo;
-  final List<String> conclusionGalileo;
-  final List<String> preguntasFinales;
-  final List<String> desarrolloGalileo;
-  final List<String> preguntasIniciales;
-  final List<String> imagenes;
-  final List<String> materiales;
-  final String grupo;
-  final String nivelEducativo;
-  final int trimestre;
-  final List<String> desarrollo;
 
   Actividad({
     required this.numeroActividad,
     required this.descripcion,
     required this.titulo,
-    required this.explicacion,
-    required this.introduccionGalileo,
-    required this.conclusionGalileo,
-    required this.preguntasFinales,
-    required this.desarrolloGalileo,
-    required this.preguntasIniciales,
-    required this.imagenes,
-    required this.materiales,
-    required this.grupo,
-    required this.nivelEducativo,
-    required this.trimestre,
-    required this.desarrollo,
   });
 
   factory Actividad.fromJson(Map<String, dynamic> json) {
@@ -296,18 +347,6 @@ class Actividad {
       numeroActividad: json['numero_actividad'],
       descripcion: json['descripcion'],
       titulo: json['titulo'],
-      explicacion: json['explicacion'],
-      introduccionGalileo: List<String>.from(json['introduccion_galileo']),
-      conclusionGalileo: List<String>.from(json['conclusion_galileo']),
-      preguntasFinales: List<String>.from(json['preguntas_finales']),
-      desarrolloGalileo: List<String>.from(json['desarrollo_galileo']),
-      preguntasIniciales: List<String>.from(json['preguntas_iniciales']),
-      imagenes: List<String>.from(json['imagenes']),
-      materiales: List<String>.from(json['materiales']),
-      grupo: json['grupo'],
-      nivelEducativo: json['nivel_educativo'],
-      trimestre: json['trimestre'],
-      desarrollo: List<String>.from(json['desarrollo']),
     );
   }
 }
@@ -329,14 +368,3 @@ class AudioSource extends StreamAudioSource {
     );
   }
 }
-
-// class SideButton extends StatefulWidget {
-//   final String imageBackground;
-//   final double scale;
-//   const SideButton({super.key, required this.imageBackground, this.scale});
-
-//   @override
-//   SideButtonState createState() => SideButtonState();
-// }
-
-// class SideButtonState extends State<SideButton> {}
