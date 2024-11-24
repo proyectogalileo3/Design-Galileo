@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart';
-import 'package:design_galileo/widgets/galileo_character.dart';
 import 'quiz_page.dart';
+import 'materials_page.dart';
+import 'package:design_galileo/widgets/galileo_character.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,6 +28,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int buttonStage = 0; // Estado de habilitación de botones (uno por uno)
   bool quizActivated = false; // Estado del botón de quiz activado
   bool autoevaluationActivated = false; // Estado del botón de autoevaluación activado
+  bool isHoveringQuiz = false; // Cursor sobre el botón de quiz
+  bool isHoveringMateriales = false; // Cursor sobre el botón de materiales
 
   @override
   void initState() {
@@ -251,11 +254,13 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         'assets/images/aula/materiales.png',
                         lateralButtonsHeight * 1.2,
                         buttonStage > 0,
+                        'materiales',
                       ),
                       _buildSideButton(
                         'assets/images/aula/autoevaluacion.png',
                         lateralButtonsHeight,
                         autoevaluationActivated,
+                        'autoevaluacion',
                       ),
                     ],
                   ),
@@ -274,11 +279,13 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         'assets/images/aula/quiz.png',
                         lateralButtonsHeight,
                         quizActivated || buttonStage > 1,
+                        'quiz',
                       ),
                       _buildSideButton(
                         'assets/images/aula/curiosidades.png',
                         lateralButtonsHeight * 1.2,
                         false, // Siempre gris por ahora
+                        'curiosidades',
                       ),
                     ],
                   ),
@@ -290,36 +297,63 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildSideButton(String asset, double height, bool enabled) {
+  Widget _buildSideButton(String asset, double height, bool enabled, String buttonType) {
+    bool isHovering = false;
+
+    if (buttonType == 'quiz') {
+      isHovering = isHoveringQuiz;
+    } else if (buttonType == 'materiales') {
+      isHovering = isHoveringMateriales;
+    }
+
     return Expanded(
       child: Align(
         alignment: Alignment.center,
-        child: GestureDetector(
-          onTap: enabled
-              ? () {
-                  if (asset.contains('quiz')) {
-                    setState(() {
-                      quizActivated = false; // Desactivar quiz
-                      autoevaluationActivated = true; // Activar autoevaluación
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const QuizPage()),
-                    );
+        child: MouseRegion(
+          onEnter: (event) {
+            setState(() {
+              if (buttonType == 'quiz') isHoveringQuiz = true;
+              if (buttonType == 'materiales') isHoveringMateriales = true;
+            });
+          },
+          onExit: (event) {
+            setState(() {
+              if (buttonType == 'quiz') isHoveringQuiz = false;
+              if (buttonType == 'materiales') isHoveringMateriales = false;
+            });
+          },
+          child: GestureDetector(
+            onTap: enabled
+                ? () {
+                    if (buttonType == 'quiz') {
+                      setState(() {
+                        quizActivated = false;
+                        autoevaluationActivated = true;
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const QuizPage()),
+                      );
+                    } else if (buttonType == 'materiales') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MaterialsPage()),
+                      );
+                    }
                   }
-                }
-              : null,
-          child: AnimatedScale(
-            scale: enabled ? 1.1 : 1.0,
-            duration: const Duration(milliseconds: 200),
-            child: Opacity(
-              opacity: enabled ? 1.0 : 0.5,
-              child: Container(
-                height: height,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(asset),
-                    fit: BoxFit.contain,
+                : null,
+            child: AnimatedScale(
+              scale: (enabled && isHovering) ? 1.2 : 1.0,
+              duration: const Duration(milliseconds: 200),
+              child: Opacity(
+                opacity: enabled ? 1.0 : 0.5,
+                child: Container(
+                  height: height,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(asset),
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
               ),

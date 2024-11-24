@@ -23,7 +23,7 @@ class QuizPage extends StatelessWidget {
             bottom: currentHeight * 0.05,
             left: currentWidth * 0.05,
             child: IconButton(
-              icon: const Icon(Icons.arrow_back, size: 36),
+              icon: const Icon(Icons.arrow_back, size: 86),
               onPressed: () {
                 Navigator.pop(context);
               },
