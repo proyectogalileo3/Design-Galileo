@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late Map<String, Actividad> actividades;
+  int indiceActividad = 0;
 
   final player = AudioPlayer();
 
@@ -27,7 +28,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool showSpeakButton = true; // Mostrar el botón de hablar antes de hablar
   int buttonStage = 0; // Estado de habilitación de botones (uno por uno)
   bool quizActivated = false; // Estado del botón de quiz activado
-  bool autoevaluationActivated = false; // Estado del botón de autoevaluación activado
+  bool autoevaluationActivated =
+      false; // Estado del botón de autoevaluación activado
   bool isHoveringQuiz = false; // Cursor sobre el botón de quiz
   bool isHoveringMateriales = false; // Cursor sobre el botón de materiales
 
@@ -95,8 +97,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       showSpeakButton = false; // Ocultar el botón de hablar
     });
     // Galileo habla
-    await playTextToSpeech(
-        "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
+    // await playTextToSpeech(
+    //     "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
     await Future.delayed(const Duration(seconds: 5)); // Simular tiempo de habla
 
     // Mostrar pizarra interactiva después de hablar
@@ -107,8 +109,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
-  void onEmpezarPressed() {
+  void onEmpezarPressed(int nuevoIndice) {
     setState(() {
+      indiceActividad = nuevoIndice;
       showButtons = true;
     });
     _animateButtons(); // Animar la aparición de los botones
@@ -160,7 +163,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   if (showSpeakButton) // Botón de hablar
                     ElevatedButton(
                       onPressed: onSpeakButtonPressed,
-                      child: const Text("Hablar"),
+                      child: const Text("Empezar"),
                     ),
                   if (!showSpeakButton) // Cuadro de texto con el mensaje de Galileo
                     Container(
@@ -196,7 +199,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 131.0, bottom: 180.0, left: 86.0, right: 86.0),
+                      top: 131.0, bottom: 180.0, left: 350.0, right: 350.0),
                   child: ListView.builder(
                     itemCount: actividades.length,
                     itemBuilder: (context, index) {
@@ -230,7 +233,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               padding: const EdgeInsets.only(
                                   right: 16.0, bottom: 8.0),
                               child: ElevatedButton(
-                                onPressed: onEmpezarPressed,
+                                onPressed: () {
+                                  onEmpezarPressed(index);
+                                },
                                 child: const Text('Empezar'),
                               ),
                             ),
@@ -283,7 +288,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       ),
                       _buildSideButton(
                         'assets/images/aula/curiosidades.png',
-                        lateralButtonsHeight * 1.2,
+                        lateralButtonsHeight,
                         false, // Siempre gris por ahora
                         'curiosidades',
                       ),
@@ -297,7 +302,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildSideButton(String asset, double height, bool enabled, String buttonType) {
+  Widget _buildSideButton(
+      String asset, double height, bool enabled, String buttonType) {
     bool isHovering = false;
 
     if (buttonType == 'quiz') {
@@ -332,12 +338,17 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       });
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const QuizPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const QuizPage()),
                       );
                     } else if (buttonType == 'materiales') {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const MaterialsPage()),
+                        MaterialPageRoute(
+                            builder: (context) => MaterialsPage(
+                                materiales: actividades.values
+                                    .elementAt(indiceActividad)
+                                    .materiales)),
                       );
                     }
                   }
@@ -369,19 +380,20 @@ class Actividad {
   final String numeroActividad;
   final String descripcion;
   final String titulo;
+  final List<String> materiales;
 
-  Actividad({
-    required this.numeroActividad,
-    required this.descripcion,
-    required this.titulo,
-  });
+  Actividad(
+      {required this.numeroActividad,
+      required this.descripcion,
+      required this.titulo,
+      required this.materiales});
 
   factory Actividad.fromJson(Map<String, dynamic> json) {
     return Actividad(
-      numeroActividad: json['numero_actividad'],
-      descripcion: json['descripcion'],
-      titulo: json['titulo'],
-    );
+        numeroActividad: json['numero_actividad'],
+        descripcion: json['descripcion'],
+        titulo: json['titulo'],
+        materiales: List<String>.from(json['materiales']));
   }
 }
 
