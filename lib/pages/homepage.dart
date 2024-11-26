@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart';
 import 'quiz_page.dart';
 import 'materials_page.dart';
+import 'autoevaluacion_page.dart';
 import 'package:design_galileo/widgets/galileo_character.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,11 +28,13 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool showButtons = false; // Mostrar los 4 botones al presionar "Empezar"
   bool showSpeakButton = true; // Mostrar el botón de hablar antes de hablar
   int buttonStage = 0; // Estado de habilitación de botones (uno por uno)
+  bool quizCompleted = false;
   bool quizActivated = false; // Estado del botón de quiz activado
   bool autoevaluationActivated =
-      false; // Estado del botón de autoevaluación activado
+      true; // Estado del botón de autoevaluación activado
   bool isHoveringQuiz = false; // Cursor sobre el botón de quiz
   bool isHoveringMateriales = false; // Cursor sobre el botón de materiales
+  bool isHoveringAutoevaluacion = false;
 
   @override
   void initState() {
@@ -53,7 +56,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<void> playTextToSpeech(String text) async {
-    const voiceBill = 'pqHfZKP75CvOlQylNhV4'; // ID de la voz
+    const voiceBill = 'Nh2zY9kknu6z4pZy6FhD'; // ID de la voz
     const url = 'https://api.elevenlabs.io/v1/text-to-speech/$voiceBill';
 
     final response = await http.post(
@@ -67,8 +70,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         "text": text,
         "model_id": "eleven_multilingual_v1",
         "voice_settings": {
-          "stability": .95,
-          "similarity_boost": .15,
+          "stability": .1,
+          "similarity_boost": .95,
         }
       }),
     );
@@ -97,8 +100,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       showSpeakButton = false; // Ocultar el botón de hablar
     });
     // Galileo habla
-    // await playTextToSpeech(
-    //     "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
+    await playTextToSpeech(
+         "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
     await Future.delayed(const Duration(seconds: 5)); // Simular tiempo de habla
 
     // Mostrar pizarra interactiva después de hablar
@@ -289,7 +292,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       _buildSideButton(
                         'assets/images/aula/curiosidades.png',
                         lateralButtonsHeight,
-                        false, // Siempre gris por ahora
+                        true, // Siempre gris por ahora
                         'curiosidades',
                       ),
                     ],
@@ -302,6 +305,26 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
+  void showPopup(BuildContext context, String message) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text("Información"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text("OK"),
+          ),
+        ],
+      );
+    },
+  );
+}
+
   Widget _buildSideButton(
       String asset, double height, bool enabled, String buttonType) {
     bool isHovering = false;
@@ -310,7 +333,10 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       isHovering = isHoveringQuiz;
     } else if (buttonType == 'materiales') {
       isHovering = isHoveringMateriales;
+    } else if (buttonType == 'autoevaluacion') {
+      isHovering = isHoveringAutoevaluacion;
     }
+    
 
     return Expanded(
       child: Align(
@@ -320,12 +346,14 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             setState(() {
               if (buttonType == 'quiz') isHoveringQuiz = true;
               if (buttonType == 'materiales') isHoveringMateriales = true;
+              if (buttonType == 'autoevaluacion') isHoveringAutoevaluacion = true;
             });
           },
           onExit: (event) {
             setState(() {
               if (buttonType == 'quiz') isHoveringQuiz = false;
               if (buttonType == 'materiales') isHoveringMateriales = false;
+              if (buttonType == 'autoevaluacion') isHoveringAutoevaluacion = false;
             });
           },
           child: GestureDetector(
@@ -338,9 +366,13 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       });
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const QuizPage()),
-                      );
+                        MaterialPageRoute(builder: (context) => const QuizPage()),
+                      ).then((_) {
+                        // Al volver del quiz, marcarlo como completado
+                        setState(() {
+                          quizCompleted = true;
+                        });
+                      });
                     } else if (buttonType == 'materiales') {
                       Navigator.push(
                         context,
@@ -350,6 +382,17 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     .elementAt(indiceActividad)
                                     .materiales)),
                       );
+                    } else if (buttonType == 'autoevaluacion') {
+                      if (quizCompleted) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const AutoevaluacionPage()),
+                        );
+                      } else {
+                        showPopup(context, "La autoevaluación no está disponible por ahora.");
+                      }
+                    } else if (buttonType == 'curiosidades') {
+                      showPopup(context, "Las curiosidades no están disponibles por ahora.");
                     }
                   }
                 : null,

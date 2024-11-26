@@ -37,6 +37,8 @@ flutter:
     - assets/images/examples/
     - assets/images/aula/
     - assets/actividades.json
+    - assets/quizzes.json
+    - assets/autoevaluaciones.json
   fonts:
     - family: ChalkFont
       fonts:
