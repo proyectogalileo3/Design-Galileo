@@ -1,0 +1,125 @@
+{
+    "quiz001": {
+      "actividad_id": "actividad001",
+      "preguntas": [
+        {
+          "tipo": "verdadero_falso",
+          "pregunta": "¿El tubo de cartón representa la oreja en nuestro experimento?",
+          "respuestas": {
+            "opciones": ["Verdadero", "Falso"],
+            "respuesta_correcta": "Verdadero"
+          }
+        },
+        {
+          "tipo": "seleccion_multiple",
+          "pregunta": "¿Qué parte del oído representa el film transparente en nuestro experimento?",
+          "respuestas": {
+            "opciones": [
+              "La oreja",
+              "El tímpano",
+              "El cerebro",
+              "Los ojos"
+            ],
+            "respuesta_correcta": "El tímpano"
+          }
+        },
+        {
+          "tipo": "seleccion_multiple",
+          "pregunta": "¿Qué usamos para adivinar de dónde viene el sonido en el experimento?",
+          "respuestas": {
+            "opciones": [
+              "Los ojos",
+              "La nariz",
+              "Los oídos",
+              "Las manos"
+            ],
+            "respuesta_correcta": "Los oídos"
+          }
+        },
+        {
+          "tipo": "verdadero_falso",
+          "pregunta": "¿El sonido viaja a través de nuestros ojos para llegar al cerebro?",
+          "respuestas": {
+            "opciones": ["Verdadero", "Falso"],
+            "respuesta_correcta": "Falso"
+          }
+        },
+        {
+          "tipo": "seleccion_multiple",
+          "pregunta": "¿Qué debemos usar para cubrir los ojos durante la actividad?",
+          "respuestas": {
+            "opciones": [
+              "Un sombrero",
+              "Una venda",
+              "Un pañuelo",
+              "Unas gafas"
+            ],
+            "respuesta_correcta": "Un pañuelo"
+          }
+        }
+      ]
+    }, 
+      "quiz002": {
+        "actividad_id": "actividad002",
+        "preguntas": [
+          {
+            "tipo": "verdadero_falso",
+            "pregunta": "¿El punto ciego se encuentra en la retina de nuestros ojos?",
+            "respuestas": {
+              "opciones": ["Verdadero", "Falso"],
+              "respuesta_correcta": "Verdadero"
+            }
+          },
+          {
+            "tipo": "seleccion_multiple",
+            "pregunta": "¿Qué células de la retina son responsables de la sensibilidad a la luz?",
+            "respuestas": {
+              "opciones": [
+                "Conos y bastoncillos",
+                "Células ganglionares",
+                "Células bipolares",
+                "Células horizontales"
+              ],
+              "respuesta_correcta": "Conos y bastoncillos"
+            }
+          },
+          {
+            "tipo": "seleccion_multiple",
+            "pregunta": "¿Qué ocurre cuando cerramos un ojo y nos acercamos al punto ciego?",
+            "respuestas": {
+              "opciones": [
+                "Desaparece parte de la imagen",
+                "Vemos mejor",
+                "La imagen se duplica",
+                "La imagen se vuelve borrosa"
+              ],
+              "respuesta_correcta": "Desaparece parte de la imagen"
+            }
+          },
+          {
+            "tipo": "verdadero_falso",
+            "pregunta": "¿El cerebro completa la parte faltante de la imagen en el punto ciego?",
+            "respuestas": {
+              "opciones": ["Verdadero", "Falso"],
+              "respuesta_correcta": "Verdadero"
+            }
+          },
+          {
+            "tipo": "seleccion_multiple",
+            "pregunta": "¿Qué usamos para comprobar el punto ciego en el experimento?",
+            "respuestas": {
+              "opciones": [
+                "Un folio blanco",
+                "Un espejo",
+                "Una linterna",
+                "Un teléfono móvil"
+              ],
+              "respuesta_correcta": "Un folio blanco"
+            }
+          }
+        ]
+      }
+    }
+    
+  
+  

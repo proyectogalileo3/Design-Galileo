@@ -1,0 +1,86 @@
+{
+      "autoeva001": {
+        "actividad_id": "actividad001",
+        "titulo": "¡Escucha!",
+        "preguntas_autoevaluacion": [
+          {
+            "pregunta": "¿He utilizado dispositivos y recursos digitales de forma segura durante la actividad?",
+            "criterio_evaluacion": "1.1.a",
+            "competencia_especifica": "Utilizar dispositivos y recursos digitales de forma segura.",
+            "tipo_respuesta": "rating",
+            "escala": [1, 2, 3, 4, 5]
+          },
+          {
+            "pregunta": "¿He comunicado los resultados del experimento de manera clara y gráfica?",
+            "criterio_evaluacion": "2.5.a",
+            "competencia_especifica": "Comunicar resultados de forma gráfica y oral.",
+            "tipo_respuesta": "rating",
+            "escala": [1, 2, 3, 4, 5]
+          },
+          {
+            "pregunta": "¿He sido capaz de seguir los pasos de la actividad de manera ordenada?",
+            "criterio_evaluacion": "2.3.a",
+            "competencia_especifica": "Participar en experimentos siguiendo pautas claras.",
+            "tipo_respuesta": "rating",
+            "escala": [1, 2, 3, 4, 5]
+          },
+          {
+            "pregunta": "¿He planteado preguntas y predicciones sobre cómo funciona el oído humano?",
+            "criterio_evaluacion": "2.1.a",
+            "competencia_especifica": "Plantear preguntas y realizar predicciones.",
+            "tipo_respuesta": "rating",
+            "escala": [1, 2, 3, 4, 5]
+          },
+          {
+            "pregunta": "¿He reconocido la importancia de la audición en nuestra vida diaria?",
+            "criterio_evaluacion": "5.3.a",
+            "competencia_especifica": "Reconocer el valor de los sentidos en el entorno natural.",
+            "tipo_respuesta": "rating",
+            "escala": [1, 2, 3, 4, 5]
+          }
+        ]
+      },
+      "autoeva002": {
+        "actividad_id": "actividad002",
+        "titulo": "El punto ciego del ojo",
+        "preguntas_autoevaluacion": [
+          {
+            "pregunta": "¿He utilizado dispositivos de manera responsable y segura?",
+            "criterio_evaluacion": "1.1.a",
+            "competencia_especifica": "Utilizar dispositivos y recursos digitales de forma segura.",
+            "tipo_respuesta": "rating",
+            "escala": [1, 2, 3, 4, 5]
+          },
+          {
+            "pregunta": "¿He explicado correctamente los pasos que seguí en el experimento?",
+            "criterio_evaluacion": "2.5.a",
+            "competencia_especifica": "Comunicar resultados de forma gráfica y oral.",
+            "tipo_respuesta": "rating",
+            "escala": [1, 2, 3, 4, 5]
+          },
+          {
+            "pregunta": "¿He seguido las instrucciones del experimento correctamente?",
+            "criterio_evaluacion": "2.3.a",
+            "competencia_especifica": "Participar en experimentos siguiendo pautas claras.",
+            "tipo_respuesta": "rating",
+            "escala": [1, 2, 3, 4, 5]
+          },
+          {
+            "pregunta": "¿He hecho preguntas y comparaciones sobre el punto ciego?",
+            "criterio_evaluacion": "2.4.a",
+            "competencia_especifica": "Establecer comparaciones entre predicciones y resultados.",
+            "tipo_respuesta": "rating",
+            "escala": [1, 2, 3, 4, 5]
+          },
+          {
+            "pregunta": "¿He aprendido cómo nuestros ojos y cerebro trabajan juntos?",
+            "criterio_evaluacion": "5.1.a",
+            "competencia_especifica": "Reconocer las características del medio natural.",
+            "tipo_respuesta": "rating",
+            "escala": [1, 2, 3, 4, 5]
+          }
+        ]
+      }
+    }
+  
+  
