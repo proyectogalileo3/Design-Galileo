@@ -22,6 +22,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   final player = AudioPlayer();
 
+  final GlobalKey<GalileoCharacterState> galileoKey =
+      GlobalKey<GalileoCharacterState>();
+
   bool isDarkBackground = false; // Oscurecer fondo al inicio
   bool showGalileo = false; // Mostrar a Galileo
   bool showInteractivePizarra = false; // Mostrar la pizarra interactiva
@@ -55,9 +58,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
-  Future<void> playTextToSpeech(String text) async {
-    const voiceBill = 'Nh2zY9kknu6z4pZy6FhD'; // ID de la voz
-    const url = 'https://api.elevenlabs.io/v1/text-to-speech/$voiceBill';
+  Future<Duration> playTextToSpeech(String text) async {
+    const voiceID = 'pqHfZKP75CvOlQylNhV4';
+    const url = 'https://api.elevenlabs.io/v1/text-to-speech/$voiceID';
 
     final response = await http.post(
       Uri.parse(url),
@@ -70,18 +73,25 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         "text": text,
         "model_id": "eleven_multilingual_v1",
         "voice_settings": {
-          "stability": .1,
-          "similarity_boost": .95,
+          "stability": .85,
+          "similarity_boost": .15,
         }
       }),
     );
 
     if (response.statusCode == 200) {
       final bytes = response.bodyBytes;
-      await player.setAudioSource(AudioSource(bytes));
+      final audioDuration =
+          await player.setAudioSource(AudioSource(bytes)) ?? Duration.zero;
+
+      // print(audioDuration);
+
       player.play();
+
+      return audioDuration;
     } else {
       print('Error al generar audio: ${response.body}');
+      return Duration.zero;
     }
   }
 
@@ -100,16 +110,19 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       showSpeakButton = false; // Ocultar el botón de hablar
     });
     // Galileo habla
-    // await playTextToSpeech(
-    //     "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
-    await Future.delayed(const Duration(seconds: 1)); // Simular tiempo de habla
+    final audioDuration = await playTextToSpeech(
+        "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
+    galileoKey.currentState!.startSpeaking(audioDuration);
+    await Future.delayed(audioDuration);
 
     // Mostrar pizarra interactiva después de hablar
-    setState(() {
-      isDarkBackground = false;
-      showGalileo = false;
-      showInteractivePizarra = true;
-    });
+    if (mounted) {
+      setState(() {
+        isDarkBackground = false;
+        showGalileo = false;
+        showInteractivePizarra = true;
+      });
+    }
   }
 
   void onEmpezarPressed(int nuevoIndice) {
@@ -158,7 +171,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const GalileoCharacter(
+                  GalileoCharacter(
+                    key: galileoKey,
                     sizeX: 800,
                     sizeY: 800,
                     posX: 800,

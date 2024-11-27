@@ -68,8 +68,15 @@ class GalileoCharacterState extends State<GalileoCharacter> {
     });
   }
 
-  void startSpeaking() {
+  void startSpeaking(Duration audioDuration) {
     _galileoCharacterController.toggleSpeaking();
+    Future.delayed(audioDuration, () {
+      if (mounted) {
+        setState(() {
+          _galileoCharacterController.toggleSpeaking();
+        });
+      }
+    });
   }
 
   @override
