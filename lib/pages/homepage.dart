@@ -99,7 +99,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // Galileo habla
     // await playTextToSpeech(
     //     "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
-    await Future.delayed(const Duration(seconds: 5)); // Simular tiempo de habla
+    await Future.delayed(const Duration(seconds: 1)); // Simular tiempo de habla
 
     // Mostrar pizarra interactiva después de hablar
     setState(() {
@@ -348,7 +348,10 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             builder: (context) => MaterialsPage(
                                 materiales: actividades.values
                                     .elementAt(indiceActividad)
-                                    .materiales)),
+                                    .materiales,
+                                imagenesMateriales: actividades.values
+                                    .elementAt(indiceActividad)
+                                    .imagenesMateriales)),
                       );
                     }
                   }
@@ -381,19 +384,22 @@ class Actividad {
   final String descripcion;
   final String titulo;
   final List<String> materiales;
+  final List<String> imagenesMateriales;
 
   Actividad(
       {required this.numeroActividad,
       required this.descripcion,
       required this.titulo,
-      required this.materiales});
+      required this.materiales,
+      required this.imagenesMateriales});
 
   factory Actividad.fromJson(Map<String, dynamic> json) {
     return Actividad(
         numeroActividad: json['numero_actividad'],
         descripcion: json['descripcion'],
         titulo: json['titulo'],
-        materiales: List<String>.from(json['materiales']));
+        materiales: List<String>.from(json['materiales']),
+        imagenesMateriales: List<String>.from(json['imagenes']));
   }
 }
 
