@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class AutoevaluacionPage extends StatefulWidget {
   const AutoevaluacionPage({super.key});
@@ -12,6 +13,8 @@ class AutoevaluacionPage extends StatefulWidget {
 class _AutoevaluacionPageState extends State<AutoevaluacionPage> {
   late List<dynamic> preguntas;
   Map<String, dynamic>? currentAutoevaluacion;
+  int currentQuestionIndex = 0; // Índice de la pregunta actual
+  Map<int, double> ratings = {}; // Ratings seleccionados por el usuario
 
   @override
   void initState() {
@@ -29,6 +32,35 @@ class _AutoevaluacionPageState extends State<AutoevaluacionPage> {
     });
   }
 
+  void handleRating(double rating) {
+    setState(() {
+      ratings[currentQuestionIndex] = rating; // Guardar el rating
+      if (currentQuestionIndex < preguntas.length - 1) {
+        currentQuestionIndex++; // Pasar a la siguiente pregunta
+      } else {
+        // Mostrar resumen
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text("Autoevaluación completada"),
+              content: Text("¡Gracias por completar la autoevaluación!"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(); // Volver a la página anterior
+                  },
+                  child: const Text("Finalizar"),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     if (currentAutoevaluacion == null) {
@@ -38,6 +70,8 @@ class _AutoevaluacionPageState extends State<AutoevaluacionPage> {
         ),
       );
     }
+
+    final currentPregunta = preguntas[currentQuestionIndex];
 
     return Scaffold(
       body: Stack(
@@ -62,7 +96,7 @@ class _AutoevaluacionPageState extends State<AutoevaluacionPage> {
               },
             ),
           ),
-          // Contenido de la autoevaluación
+          // Contenido de la pregunta
           Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -80,59 +114,33 @@ class _AutoevaluacionPageState extends State<AutoevaluacionPage> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
-                  // Preguntas
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: preguntas.length,
-                      itemBuilder: (context, index) {
-                        final pregunta = preguntas[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Card(
-                            color: Colors.grey[800],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    pregunta["pregunta"],
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: (pregunta["escala"] as List<dynamic>)
-                                        .map((e) => GestureDetector(
-                                              onTap: () {
-                                                // Lógica de respuesta (opcional)
-                                              },
-                                              child: CircleAvatar(
-                                                backgroundColor: Colors.blue,
-                                                child: Text(
-                                                  e.toString(),
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            ))
-                                        .toList(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                  // Pregunta actual
+                  Text(
+                    currentPregunta["pregunta"],
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 30),
+                  // Rating con estrellas
+                  RatingBar.builder(
+                    initialRating: ratings[currentQuestionIndex] ?? 0,
+                    minRating: 1,
+                    maxRating: 5,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
+                      handleRating(rating);
+                    },
                   ),
                 ],
               ),
