@@ -9,12 +9,15 @@ class GalileoCharacter extends StatefulWidget {
   final double posX;
   final double posY;
 
+  final VoidCallback? onWalkComplete;
+
   const GalileoCharacter(
       {super.key,
       this.sizeX = 500.0,
       this.sizeY = 500.0,
       this.posX = 0.0,
-      this.posY = 0.0});
+      this.posY = 0.0,
+      this.onWalkComplete});
 
   @override
   GalileoCharacterState createState() => GalileoCharacterState();
@@ -46,34 +49,57 @@ class GalileoCharacterState extends State<GalileoCharacter> {
     setState(() {});
   }
 
-  void startWalking() {
-    if (posX <= 0.0) {
-      return;
+  void startWalking(double newPosX, {VoidCallback? onWalkComplete}) {
+    if (posX == newPosX) {
+      return; // No hay movimiento si ya está en la posición deseada
     }
-    _galileoCharacterController.toggleWalking();
+
+    // Activa la animación de caminar
+    _galileoCharacterController.setWalking(true);
+
+    void stopWalking(Timer timer) {
+      timer.cancel();
+
+      // Cambia el estado a idle
+      _galileoCharacterController.setWalking(false);
+
+      if (onWalkComplete != null) {
+        onWalkComplete();
+      }
+    }
 
     Timer.periodic(const Duration(milliseconds: 16), (timer) {
       setState(() {
-        if (posX <= 0.0) {
-          timer.cancel();
-          _galileoCharacterController.toggleWalking();
+        if (posX < newPosX) {
+          posX += 2.0;
+          if (posX >= newPosX) {
+            posX = newPosX; // Asegúrate de que no exceda la posición final
+            stopWalking(timer);
+          }
+        } else {
+          posX -= 2.0;
+          if (posX <= newPosX) {
+            posX = newPosX; // Asegúrate de que no exceda la posición final
+            stopWalking(timer);
+          }
         }
-        posX -= 2.0;
       });
 
-      if (_galileoCharacterController.isWalking != null &&
-          !_galileoCharacterController.isWalking!.value) {
-        timer.cancel();
+      // Si el estado de caminar se desactiva externamente
+      if (!_galileoCharacterController.isWalkingActive) {
+        stopWalking(timer);
       }
     });
   }
 
+
+
   void startSpeaking(Duration audioDuration) {
-    _galileoCharacterController.toggleSpeaking();
+    _galileoCharacterController.setSpeaking(true);
     Future.delayed(audioDuration, () {
       if (mounted) {
         setState(() {
-          _galileoCharacterController.toggleSpeaking();
+          _galileoCharacterController.setSpeaking(false);
         });
       }
     });

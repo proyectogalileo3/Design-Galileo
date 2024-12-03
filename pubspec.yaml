@@ -40,6 +40,7 @@ flutter:
     - assets/actividades.json
     - assets/quizzes.json
     - assets/autoevaluaciones.json
+    - assets/audio/
   fonts:
     - family: ChalkFont
       fonts:

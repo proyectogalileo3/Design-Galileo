@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 
@@ -9,6 +10,7 @@ class GalileoCharacterController {
   Artboard? get artboard => _riveArtboard;
 
   Future<void> loadRiveFile() async {
+  try {
     await RiveFile.initialize();
 
     final data = await rootBundle.load('assets/images/galileo/galileo.riv');
@@ -22,20 +24,29 @@ class GalileoCharacterController {
       artboard.addController(controller);
       isWalking = controller.findInput<bool>('isWalking') as SMIBool?;
       isSpeaking = controller.findInput<bool>('isSpeaking') as SMIBool?;
+    } else {
+      throw Exception('State Machine Controller not found.');
     }
 
     _riveArtboard = artboard;
+  } catch (e) {
+    debugPrint('Error loading Rive file: $e');
   }
+}
 
-  void toggleWalking() {
+
+  void setWalking(bool value) {
     if (isWalking != null) {
-      isWalking!.value = !isWalking!.value;
+      isWalking!.value = value;
     }
   }
 
-  void toggleSpeaking() {
+  void setSpeaking(bool value) {
     if (isSpeaking != null) {
-      isSpeaking!.value = !isSpeaking!.value;
+      isSpeaking!.value = value;
     }
   }
+
+  bool get isWalkingActive => isWalking?.value ?? false;
+  bool get isSpeakingActive => isSpeaking?.value ?? false;
 }

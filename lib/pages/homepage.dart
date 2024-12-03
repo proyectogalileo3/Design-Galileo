@@ -1,13 +1,15 @@
 import 'dart:convert';
-import 'package:design_galileo/main.dart';
+
+import 'package:design_galileo/pages/experimento_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:just_audio/just_audio.dart';
 import 'quiz_page.dart';
 import 'materials_page.dart';
 import 'autoevaluacion_page.dart';
 import 'package:design_galileo/widgets/galileo_character.dart';
+// import 'package:design_galileo/utils/playTextToSpeech.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,8 +22,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late Map<String, Actividad> actividades;
   int indiceActividad = 0;
 
-  final player = AudioPlayer();
-
   final GlobalKey<GalileoCharacterState> galileoKey =
       GlobalKey<GalileoCharacterState>();
 
@@ -30,6 +30,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool showInteractivePizarra = false; // Mostrar la pizarra interactiva
   bool showButtons = false; // Mostrar los 4 botones al presionar "Empezar"
   bool showSpeakButton = true; // Mostrar el botón de hablar antes de hablar
+  bool showList = true;
   int buttonStage = 0; // Estado de habilitación de botones (uno por uno)
   bool quizCompleted = false;
   bool quizActivated = false; // Estado del botón de quiz activado
@@ -38,6 +39,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool isHoveringQuiz = false; // Cursor sobre el botón de quiz
   bool isHoveringMateriales = false; // Cursor sobre el botón de materiales
   bool isHoveringAutoevaluacion = false;
+  bool isHoveringComenzar = false;
 
   @override
   void initState() {
@@ -58,43 +60,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
-  Future<Duration> playTextToSpeech(String text) async {
-    const voiceID = 'pqHfZKP75CvOlQylNhV4';
-    const url = 'https://api.elevenlabs.io/v1/text-to-speech/$voiceID';
-
-    final response = await http.post(
-      Uri.parse(url),
-      headers: {
-        'accept': 'audio/mpeg',
-        'xi-api-key': elevenlabsAPIKey,
-        'Content-Type': 'application/json',
-      },
-      body: json.encode({
-        "text": text,
-        "model_id": "eleven_multilingual_v1",
-        "voice_settings": {
-          "stability": .85,
-          "similarity_boost": .15,
-        }
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      final bytes = response.bodyBytes;
-      final audioDuration =
-          await player.setAudioSource(AudioSource(bytes)) ?? Duration.zero;
-
-      // print(audioDuration);
-
-      player.play();
-
-      return audioDuration;
-    } else {
-      print('Error al generar audio: ${response.body}');
-      return Duration.zero;
-    }
-  }
-
   Future<void> _startSequence() async {
     // Mostrar Galileo después de 2 segundos con fondo oscuro
     await Future.delayed(const Duration(seconds: 2));
@@ -109,11 +74,15 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     setState(() {
       showSpeakButton = false; // Ocultar el botón de hablar
     });
-    // Galileo habla
-    final audioDuration = await playTextToSpeech(
-        "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
-    galileoKey.currentState!.startSpeaking(audioDuration);
-    await Future.delayed(audioDuration);
+
+    final player = AudioPlayer();
+    final audioDuration = await player.setAsset('assets/audio/presentacion_galileo.mp3') ?? Duration.zero;
+
+    // TextToSpeech
+    // final audioDuration = await playTextToSpeech(player, "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
+
+    // galileoKey.currentState!.startSpeaking(audioDuration);
+    // await player.play();
 
     // Mostrar pizarra interactiva después de hablar
     if (mounted) {
@@ -127,6 +96,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   void onEmpezarPressed(int nuevoIndice) {
     setState(() {
+      showList = false;
       indiceActividad = nuevoIndice;
       showButtons = true;
     });
@@ -173,8 +143,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 children: [
                   GalileoCharacter(
                     key: galileoKey,
-                    sizeX: 800,
-                    sizeY: 800,
+                    sizeX: currentHeight * .33,
+                    sizeY: currentWidth * .33,
                     posX: 800,
                   ),
                   if (showSpeakButton) // Botón de hablar
@@ -216,8 +186,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 131.0, bottom: 180.0, left: 350.0, right: 350.0),
-                  child: ListView.builder(
+                      top: 80.0, bottom: 120.0, left: 380.0, right: 380.0),
+                  child: showList
+                  ? ListView.builder(
                     itemCount: actividades.length,
                     itemBuilder: (context, index) {
                       final actividad = actividades.values.elementAt(index);
@@ -260,6 +231,77 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         ],
                       );
                     },
+                  )
+                  : Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.arrow_circle_left,
+                              size: 42,
+                              color: Color(0x66000000),
+                            ),
+                            onPressed: () {
+                              showList = true;
+                            },
+                          ),
+                        ),
+                      ),
+                      Center(
+                          child: MouseRegion(
+                            onEnter: (_) => setState(() => isHoveringComenzar = true),
+                            onExit: (_) => setState(() => isHoveringComenzar = false),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              curve: Curves.easeInOut,
+                              width: isHoveringComenzar ? 120 * 1.1 : 120,
+                              height: isHoveringComenzar ? 120 * 1.1 : 120,
+                              decoration: BoxDecoration(
+                                color: isHoveringComenzar? const Color(0xAA000000) : const Color(0x33000000),
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                              ),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.play_arrow,
+                                  size: isHoveringComenzar? 64 * 1.1 : 64,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ExperimentoPage(
+                                          introduccionGalileo: actividades
+                                                                .values
+                                                                .elementAt(indiceActividad)
+                                                                .introduccionGalileo,
+                                          desarrollo: actividades
+                                                        .values
+                                                        .elementAt(indiceActividad)
+                                                        .desarrollo,
+                                          imagenes: actividades
+                                                        .values
+                                                        .elementAt(indiceActividad)
+                                                        .imagenes,
+                                          conclusion: actividades
+                                                        .values
+                                                        .elementAt(indiceActividad)
+                                                        .conclusion,
+                                        )),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -442,18 +484,32 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
 }
 
 class Actividad {
+  // Para pantalla de inicio
   final String numeroActividad;
   final String descripcion;
   final String titulo;
+
+  // Para pantalla de materiales
   final List<String> materiales;
   final List<String> imagenesMateriales;
 
-  Actividad(
-      {required this.numeroActividad,
-      required this.descripcion,
-      required this.titulo,
-      required this.materiales,
-      required this.imagenesMateriales});
+  // Para pantalla de experimentos
+  final List<String> introduccionGalileo;
+  final List<String> desarrollo;
+  final List<String> imagenes;
+  final List<String> conclusion;
+
+  Actividad({
+    required this.numeroActividad,
+    required this.descripcion,
+    required this.titulo,
+    required this.materiales,
+    required this.imagenesMateriales,
+    required this.introduccionGalileo,
+    required this.desarrollo,
+    required this.imagenes,
+    required this.conclusion,
+  });
 
   factory Actividad.fromJson(Map<String, dynamic> json) {
     return Actividad(
@@ -461,24 +517,10 @@ class Actividad {
         descripcion: json['descripcion'],
         titulo: json['titulo'],
         materiales: List<String>.from(json['materiales']),
-        imagenesMateriales: List<String>.from(json['imagenes']));
-  }
-}
-
-class AudioSource extends StreamAudioSource {
-  final List<int> bytes;
-  AudioSource(this.bytes);
-
-  @override
-  Future<StreamAudioResponse> request([int? start, int? end]) async {
-    start ??= 0;
-    end ??= bytes.length;
-    return StreamAudioResponse(
-      sourceLength: bytes.length,
-      contentLength: end - start,
-      offset: start,
-      stream: Stream.value(bytes.sublist(start, end)),
-      contentType: 'audio/mpeg',
-    );
+        imagenesMateriales: List<String>.from(json['imagenes_materiales']),
+        introduccionGalileo: List<String>.from(json['introduccion_galileo']),
+        desarrollo: List<String>.from(json['desarrollo']),
+        imagenes: List<String>.from(json['imagenes']),
+        conclusion: List<String>.from(json['conclusion_galileo']));
   }
 }

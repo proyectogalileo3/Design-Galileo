@@ -37,8 +37,16 @@
             "¿Cómo lo hacemos?"
         ],
         "imagenes": [
-            ""
+            "assets/images/examples/avion1.png",
+            "assets/images/examples/avion2.png",
+            "assets/images/examples/avion3.png",
+            "assets/images/examples/avion4.png",
+            "assets/images/examples/avion5.png",
+            "assets/images/examples/avion6.png",
+            "assets/images/examples/avion7.png",
+            "assets/images/examples/avion8.png"
         ],
+        "imagenes_materiales": [],
         "numero_actividad": "Actividad 1.1",
         "descripcion": "En esta actividad vamos a reproducir un oído humano con un tubo de cartón y un trozo de film transparente. Luego comprobaremos cómo funciona el oído y haremos unas pruebas para comprobar si podemos determinar de dónde vienen los sonidos que escuchamos.",
         "trimestre": 1,
@@ -106,16 +114,8 @@
             "¿A qué crees que se deben?",
             "Si hay un punto ciego en cada ojo ¿Por qué no lo notamos al mirar?"
         ],
-        "imagenes": [
-            "assets/images/examples/avion1.png",
-            "assets/images/examples/avion2.png",
-            "assets/images/examples/avion3.png",
-            "assets/images/examples/avion4.png",
-            "assets/images/examples/avion5.png",
-            "assets/images/examples/avion6.png",
-            "assets/images/examples/avion7.png",
-            "assets/images/examples/avion8.png"
-        ],
+        "imagenes": [],
+        "imagenes_materiales": [],
         "desarrollo_galileo": [
             " ¿Ya los tenéis todos listos? Excelente, comencemos por el primer paso.",
             "Vamos a tomar el folio en blanco y dibujar dos circulitos de 2-3 mm de diámetro y separados unos 5-6 cm entre sí.",
@@ -188,9 +188,8 @@
             "Una vez llegan las dos imágenes al cerebro, éste las solapa para generar la imagen final. En esta actividad, forzamos a que cada ojo vea cosas muy diferentes entre sí. Un ojo ve un agujero, mientras que el otro ojo ve una mano.",
             "El cerebro solapa ambas imágenes, por eso acabamos viendo la palma de la mano con un agujero en medio."
         ],
-        "imagenes": [
-            ""
-        ],
+        "imagenes": [],
+        "imagenes_materiales": [],
         "grupo": "primaria1"
     }
 }
