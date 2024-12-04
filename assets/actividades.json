@@ -46,7 +46,16 @@
             "assets/images/examples/avion7.png",
             "assets/images/examples/avion8.png"
         ],
-        "imagenes_materiales": [],
+        "imagenes_materiales": [
+            "assets/images/examples/avion1.png",
+            "assets/images/examples/avion2.png",
+            "assets/images/examples/avion3.png",
+            "assets/images/examples/avion4.png",
+            "assets/images/examples/avion5.png",
+            "assets/images/examples/avion6.png",
+            "assets/images/examples/avion7.png",
+            "assets/images/examples/avion8.png"
+        ],
         "numero_actividad": "Actividad 1.1",
         "descripcion": "En esta actividad vamos a reproducir un oído humano con un tubo de cartón y un trozo de film transparente. Luego comprobaremos cómo funciona el oído y haremos unas pruebas para comprobar si podemos determinar de dónde vienen los sonidos que escuchamos.",
         "trimestre": 1,

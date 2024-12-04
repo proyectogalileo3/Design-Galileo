@@ -245,7 +245,10 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               color: Color(0x66000000),
                             ),
                             onPressed: () {
-                              showList = true;
+                              setState(() {
+                                showList = true;
+                                showButtons = false;
+                              });
                             },
                           ),
                         ),
@@ -401,16 +404,14 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
             setState(() {
               if (buttonType == 'quiz') isHoveringQuiz = true;
               if (buttonType == 'materiales') isHoveringMateriales = true;
-              if (buttonType == 'autoevaluacion')
-                isHoveringAutoevaluacion = true;
+              if (buttonType == 'autoevaluacion') isHoveringAutoevaluacion = true;
             });
           },
           onExit: (event) {
             setState(() {
               if (buttonType == 'quiz') isHoveringQuiz = false;
               if (buttonType == 'materiales') isHoveringMateriales = false;
-              if (buttonType == 'autoevaluacion')
-                isHoveringAutoevaluacion = false;
+              if (buttonType == 'autoevaluacion') isHoveringAutoevaluacion = false;
             });
           },
           child: GestureDetector(

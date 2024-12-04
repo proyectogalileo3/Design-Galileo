@@ -69,21 +69,23 @@ class GalileoCharacterState extends State<GalileoCharacter> {
     }
 
     Timer.periodic(const Duration(milliseconds: 16), (timer) {
-      setState(() {
-        if (posX < newPosX) {
-          posX += 2.0;
-          if (posX >= newPosX) {
-            posX = newPosX; // Asegúrate de que no exceda la posición final
-            stopWalking(timer);
+      if (mounted) {
+        setState(() {
+          if (posX < newPosX) {
+            posX += 2.0;
+            if (posX >= newPosX) {
+              posX = newPosX; // Asegúrate de que no exceda la posición final
+              stopWalking(timer);
+            }
+          } else {
+            posX -= 2.0;
+            if (posX <= newPosX) {
+              posX = newPosX; // Asegúrate de que no exceda la posición final
+              stopWalking(timer);
+            }
           }
-        } else {
-          posX -= 2.0;
-          if (posX <= newPosX) {
-            posX = newPosX; // Asegúrate de que no exceda la posición final
-            stopWalking(timer);
-          }
-        }
-      });
+        });
+      }
 
       // Si el estado de caminar se desactiva externamente
       if (!_galileoCharacterController.isWalkingActive) {

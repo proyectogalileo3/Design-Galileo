@@ -31,9 +31,13 @@ class MaterialsPageState extends State<MaterialsPage> {
     // Calcular los elementos de la página actual
     final startIndex = currentPage * itemsPerPage;
     final endIndex = (startIndex + itemsPerPage).clamp(0, materiales.length);
+
+    // if (imagenesMateriales.isEmpty) {
+      
+    // }
+
     final currentMaterials = materiales.sublist(startIndex, endIndex);
-    final currentImagenesMateriales =
-        imagenesMateriales.sublist(startIndex, endIndex);
+    final currentImagenesMateriales = imagenesMateriales.isEmpty? null : imagenesMateriales.sublist(startIndex, endIndex);
 
     return Scaffold(
       body: Container(
@@ -67,21 +71,24 @@ class MaterialsPageState extends State<MaterialsPage> {
                                     child: Container(
                                       child: Column(
                                         children: [
-                                          Container(
+                                          imagenesMateriales.isEmpty
+                                          ? Container(
                                             height: currentHeight * 0.6,
                                             width: currentHeight * 0.6,
-                                            // color: Colors.deepOrange.shade300,
+                                            color: const Color(0xFFF4F4F4),
+                                            child: Text(currentMaterials[index]),
+                                          )
+                                          :Container(
+                                            height: currentHeight * 0.6,
+                                            width: currentHeight * 0.6,
                                             decoration: BoxDecoration(
                                                 image: DecorationImage(
                                                     fit: BoxFit.cover,
                                                     image: AssetImage(
-                                                        currentImagenesMateriales[
-                                                            index])),
+                                                        currentImagenesMateriales![index])),
                                                 border: Border.all(
                                                     color: Colors.black,
                                                     width: 4)),
-                                            // child:
-                                            //     Text(currentMaterials[index]),
                                           ),
                                           Transform.translate(
                                             offset:
@@ -101,7 +108,7 @@ class MaterialsPageState extends State<MaterialsPage> {
                                                   // ),
                                                   // const SizedBox(width: 20),
                                                   SizedBox(
-                                                    width: currentHeight - 500,
+                                                    width: currentHeight * .6, // Margen nombre materiales
                                                     child: Text(
                                                       currentMaterials[index],
                                                       style: TextStyle(
@@ -132,8 +139,17 @@ class MaterialsPageState extends State<MaterialsPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            // Flecha hacia la derecha
                             IconButton(
-                              icon: const Icon(Icons.arrow_left, size: 40),
+                              icon: Transform.flip(
+                                flipX: true,
+                                child: Image.asset(
+                                  'assets/images/galileo/wooden_arrow.png',
+                                  width: 96,
+                                  height: 96,
+                                  alignment: Alignment.centerRight,
+                                ),
+                              ),
                               onPressed: currentPage > 0
                                   ? () {
                                       setState(() {
@@ -142,8 +158,14 @@ class MaterialsPageState extends State<MaterialsPage> {
                                     }
                                   : null,
                             ),
+                            // Flecha hacia la izquierda
                             IconButton(
-                              icon: const Icon(Icons.arrow_right, size: 40),
+                              icon: Image.asset(
+                                'assets/images/galileo/wooden_arrow.png',
+                                width: 96,
+                                height: 96,
+                                alignment: Alignment.centerLeft,
+                              ),
                               onPressed: endIndex < materiales.length
                                   ? () {
                                       setState(() {
@@ -154,6 +176,7 @@ class MaterialsPageState extends State<MaterialsPage> {
                             ),
                           ],
                         ),
+
                       ],
                     ),
                   ),
