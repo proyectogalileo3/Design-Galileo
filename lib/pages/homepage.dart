@@ -81,8 +81,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // TextToSpeech
     // final audioDuration = await playTextToSpeech(player, "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
 
-    // galileoKey.currentState!.startSpeaking(audioDuration);
-    // await player.play();
+    galileoKey.currentState!.startSpeaking(audioDuration);
+    await player.play();
 
     // Mostrar pizarra interactiva después de hablar
     if (mounted) {
@@ -143,8 +143,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 children: [
                   GalileoCharacter(
                     key: galileoKey,
-                    sizeX: currentHeight * .33,
-                    sizeY: currentWidth * .33,
+                    sizeX: currentHeight * .43,
+                    sizeY: currentWidth * .43,
                     posX: 800,
                   ),
                   if (showSpeakButton) // Botón de hablar
@@ -162,7 +162,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         border: Border.all(color: Colors.black, width: 2),
                       ),
                       child: const Text(
-                        "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.",
+                        "¡Hola! Soy Galileo, bienvenido al laboratorio. ¡Acompáñame a descubrir los secretos del universo, a través de fascinantes experimentos, que cambiará tu forma de ver el mundo!",
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
@@ -452,11 +452,11 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         );
                       } else {
                         showPopup(context,
-                            "La autoevaluación no está disponible por ahora.");
+                            "La autoevaluación no está disponible hasta que se complete Quiz.");
                       }
                     } else if (buttonType == 'curiosidades') {
                       showPopup(context,
-                          "Las curiosidades no están disponibles por ahora.");
+                          "Las curiosidades no están disponibles hasta que se complete Autoevaluación.");
                     }
                   }
                 : null,
