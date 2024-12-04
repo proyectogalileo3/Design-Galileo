@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:design_galileo/widgets/galileo_character.dart';
+import 'package:flutter/services.dart';
 
 class ExperimentoPage extends StatefulWidget {
+  final int indiceActividad;
   final List<String> introduccionGalileo;
   final List<String> desarrollo;
   final List<String> imagenes;
@@ -10,6 +12,7 @@ class ExperimentoPage extends StatefulWidget {
 
   const ExperimentoPage({
     super.key,
+    required this.indiceActividad,
     required this.introduccionGalileo,
     required this.desarrollo,
     required this.imagenes,
@@ -26,48 +29,70 @@ class ExperimentoPageState extends State<ExperimentoPage> {
 
   bool showDialogues = false;
   int currentDialogueIndex = 0;
-  bool isIntroduction = true; // Indicador para saber qué diálogo se está mostrando.
-  bool isConclusion = false; // Indicador para los diálogos de conclusión.
+  bool isIntroduction = true;
+  bool isConclusion = false;
 
   void startDialogueSequence() {
     setState(() {
       showDialogues = true;
       currentDialogueIndex = 0;
-      isIntroduction = true; // Empezamos con la introducción.
-      isConclusion = false;  // Aseguramos que no estamos en conclusión al inicio.
+      isIntroduction = true;
+      isConclusion = false;
     });
+    _playAudio();
   }
 
   void nextDialogue() {
     setState(() {
       if (isIntroduction) {
-        // Si estamos en la introducción, avanzar dentro de introduccionGalileo.
         if (currentDialogueIndex < widget.introduccionGalileo.length - 1) {
           currentDialogueIndex++;
         } else {
-          // Cambiar a los diálogos de desarrollo.
           isIntroduction = false;
           currentDialogueIndex = 0;
         }
       } else if (!isConclusion) {
-        // Si estamos en el desarrollo, avanzar dentro de desarrollo.
         if (currentDialogueIndex < widget.desarrollo.length - 1) {
           currentDialogueIndex++;
         } else {
-          // Al finalizar los diálogos de desarrollo, pasar a los de conclusión.
           isConclusion = true;
           currentDialogueIndex = 0;
         }
       } else {
-        // Si estamos en la conclusión, avanzar dentro de conclusion.
         if (currentDialogueIndex < widget.conclusion.length - 1) {
           currentDialogueIndex++;
         } else {
-          // Finalizar los diálogos.
           showDialogues = false;
         }
       }
     });
+    _playAudio();
+  }
+
+  void _playAudio() async {
+    String audioPath = '';
+
+    if (isIntroduction) {
+      audioPath = 'audio/actividad00${widget.indiceActividad + 1}/introduccion_galileo/audio_0${currentDialogueIndex + 1}.mp3';
+    } else if (!isConclusion) {
+      audioPath = 'audio/actividad00${widget.indiceActividad + 1}/desarrollo_galileo/audio_0${currentDialogueIndex + 1}.mp3';
+    } else {
+      audioPath = 'audio/actividad00${widget.indiceActividad + 1}/conclusion_galileo/audio_0${currentDialogueIndex + 1}.mp3';
+    }
+
+    try {
+      // Cargar y reproducir el audio
+      await player.setAsset(audioPath);
+      player.play();
+    } catch (e) {
+      print("Error al reproducir el audio: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    player.dispose();
   }
 
   @override
@@ -78,7 +103,6 @@ class ExperimentoPageState extends State<ExperimentoPage> {
     return Scaffold(
       body: Stack(
         children: [
-          // Fondo
           Container(
             decoration: const BoxDecoration(
               color: Color(0xFF303234),
@@ -88,7 +112,6 @@ class ExperimentoPageState extends State<ExperimentoPage> {
               ),
             ),
           ),
-          // Botón Empezar
           Positioned(
             top: 20,
             left: 20,
@@ -99,14 +122,12 @@ class ExperimentoPageState extends State<ExperimentoPage> {
               child: const Text('Empezar'),
             ),
           ),
-          // Personaje Galileo
           GalileoCharacter(
             key: galileoKey,
             posX: -500,
             sizeX: 600,
             sizeY: 600,
           ),
-          // Diálogos superpuestos
           if (showDialogues)
             Align(
               alignment: Alignment.topCenter,
@@ -115,7 +136,6 @@ class ExperimentoPageState extends State<ExperimentoPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Texto del diálogo
                     Container(
                       padding: const EdgeInsets.all(16.0),
                       margin: const EdgeInsets.all(64.0),
@@ -136,10 +156,9 @@ class ExperimentoPageState extends State<ExperimentoPage> {
                         ),
                       ),
                     ),
-                    // Mostrar imagen solo en desarrollo
                     Column(
                       children: [
-                        if (!isIntroduction && !isConclusion) // Solo en desarrollo
+                        if (!isIntroduction && !isConclusion)
                           widget.imagenes.length > currentDialogueIndex
                               ? Image.asset(
                                   widget.imagenes[currentDialogueIndex],

@@ -81,8 +81,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // TextToSpeech
     // final audioDuration = await playTextToSpeech(player, "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.");
 
-    // galileoKey.currentState!.startSpeaking(audioDuration);
-    // await player.play();
+    galileoKey.currentState!.startSpeaking(audioDuration);
+    await player.play();
 
     // Mostrar pizarra interactiva después de hablar
     if (mounted) {
@@ -162,7 +162,9 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         border: Border.all(color: Colors.black, width: 2),
                       ),
                       child: const Text(
-                        "Hola, soy Galileo. Bienvenido al laboratorio de experimentos.",
+                        "¡Hola, soy Galileo!. Bienvenido al laboratorio."
+                        " Acompáñame a descubrir los secretos del universo a través de fascinantes experimentos"
+                        " que cambiarán tu forma de ver el mundo.",
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
@@ -281,6 +283,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ExperimentoPage(
+                                          indiceActividad: indiceActividad,
                                           introduccionGalileo: actividades
                                                                 .values
                                                                 .elementAt(indiceActividad)
