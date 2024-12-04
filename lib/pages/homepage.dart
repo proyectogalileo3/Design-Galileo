@@ -8,6 +8,7 @@ import 'package:just_audio/just_audio.dart';
 import 'quiz_page.dart';
 import 'materials_page.dart';
 import 'autoevaluacion_page.dart';
+import 'curiosidades_page.dart';
 import 'package:design_galileo/widgets/galileo_character.dart';
 // import 'package:design_galileo/utils/playTextToSpeech.dart';
 
@@ -36,6 +37,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool quizActivated = false; // Estado del botón de quiz activado
   bool autoevaluationActivated =
       true; // Estado del botón de autoevaluación activado
+  bool autoevaluationCompleted = false;
+  bool curiosidadesActivated = true;
   bool isHoveringQuiz = false; // Cursor sobre el botón de quiz
   bool isHoveringMateriales = false; // Cursor sobre el botón de materiales
   bool isHoveringAutoevaluacion = false;
@@ -351,7 +354,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       _buildSideButton(
                         'assets/images/aula/curiosidades.png',
                         lateralButtonsHeight,
-                        true, // Siempre gris por ahora
+                        curiosidadesActivated, 
                         'curiosidades',
                       ),
                     ],
@@ -449,16 +452,31 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const AutoevaluacionPage()),
-                        );
+                            builder: (context) => const AutoevaluacionPage(),
+                          ),
+                        ).then((_) {
+                          // Marcar autoevaluación como completada al volver de la página
+                          setState(() {
+                            autoevaluationCompleted = true;
+                          });
+                        });
                       } else {
                         showPopup(context,
                             "La autoevaluación no está disponible hasta que se complete Quiz.");
                       }
                     } else if (buttonType == 'curiosidades') {
-                      showPopup(context,
-                          "Las curiosidades no están disponibles hasta que se complete Autoevaluación.");
-                    }
+                        if (autoevaluationCompleted) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CuriosidadesPage(),
+                            ),
+                          );
+                        } else {
+                          showPopup(context,
+                              "Las curiosidades no están disponibles hasta que se complete Autoevaluación.");
+                        }
+                      }
                   }
                 : null,
             child: AnimatedScale(
