@@ -1,3 +1,4 @@
+import 'package:design_galileo/pages/homepage.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -14,7 +15,7 @@ class LoginPage extends StatelessWidget {
         body: Stack(
       children: [
         Positioned.fill(
-            child: Image.asset('assets/images/galileo/image.webp',
+            child: Image.asset('assets/images/galileo/login_background.png',
                 fit: BoxFit.cover)),
         Center(
           child: Container(
@@ -68,7 +69,12 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const HomePage())
+                    );
+                  },
                   child: const Text('Login'),
                 ),
                 const SizedBox(height: 12),

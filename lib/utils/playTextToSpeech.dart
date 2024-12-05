@@ -1,4 +1,5 @@
-import 'package:design_galileo/main.dart';
+// import 'package:design_galileo/main.dart'; // Para importar la API KEY
+
 import 'package:http/http.dart' as http;
 import 'package:just_audio/just_audio.dart';
 import 'dart:convert';
