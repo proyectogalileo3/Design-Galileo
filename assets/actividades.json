@@ -46,6 +46,7 @@
             "assets/images/examples/avion7.png",
             "assets/images/examples/avion8.png"
         ],
+        "explicacion_en_pasos": [1, 3, 5, 9],
         "imagenes_materiales": [
             "assets/images/examples/avion1.png",
             "assets/images/examples/avion2.png",
@@ -125,6 +126,7 @@
         ],
         "imagenes": [],
         "imagenes_materiales": [],
+        "explicacion_en_pasos": [],
         "desarrollo_galileo": [
             " ¿Ya los tenéis todos listos? Excelente, comencemos por el primer paso.",
             "Vamos a tomar el folio en blanco y dibujar dos circulitos de 2-3 mm de diámetro y separados unos 5-6 cm entre sí.",
@@ -199,6 +201,7 @@
         ],
         "imagenes": [],
         "imagenes_materiales": [],
+        "explicacion_en_pasos": [],
         "grupo": "primaria1"
     }
 }

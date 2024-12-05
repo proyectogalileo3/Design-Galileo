@@ -44,7 +44,7 @@ class _AutoevaluacionPageState extends State<AutoevaluacionPage> {
           builder: (context) {
             return AlertDialog(
               title: const Text("Autoevaluación completada"),
-              content: Text("¡Gracias por completar la autoevaluación!"),
+              content: const Text("¡Gracias por completar la autoevaluación!"),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -98,54 +98,68 @@ class _AutoevaluacionPageState extends State<AutoevaluacionPage> {
           ),
           // Contenido de la pregunta
           Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Título
-                  Text(
-                    currentAutoevaluacion!["titulo"],
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: MediaQuery.of(context).size.width * 0.75, // Establece el ancho mínimo que desees
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 64, horizontal: 256),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xf0d95200), // Color del fondo
+                    borderRadius: BorderRadius.circular(64),
                   ),
-                  const SizedBox(height: 16),
-                  // Pregunta actual
-                  Text(
-                    currentPregunta["pregunta"],
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(64),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Título
+                        Text(
+                          currentAutoevaluacion!["titulo"],
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 16),
+                        // Pregunta actual
+                        Text(
+                          currentPregunta["pregunta"],
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 30),
+                        // Rating con estrellas
+                        RatingBar.builder(
+                          initialRating: ratings[currentQuestionIndex] ?? 0,
+                          minRating: 1,
+                          maxRating: 5,
+                          direction: Axis.horizontal,
+                          allowHalfRating: false,
+                          itemCount: 5,
+                          itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            handleRating(rating);
+                          },
+                        ),
+                      ],
                     ),
-                    textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 30),
-                  // Rating con estrellas
-                  RatingBar.builder(
-                    initialRating: ratings[currentQuestionIndex] ?? 0,
-                    minRating: 1,
-                    maxRating: 5,
-                    direction: Axis.horizontal,
-                    allowHalfRating: false,
-                    itemCount: 5,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating) {
-                      handleRating(rating);
-                    },
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
+          )
         ],
       ),
     );

@@ -146,8 +146,8 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 children: [
                   GalileoCharacter(
                     key: galileoKey,
-                    sizeX: currentHeight * .43,
-                    sizeY: currentWidth * .43,
+                    sizeX: currentHeight * .33,
+                    sizeY: currentWidth * .33,
                     posX: 800,
                   ),
                   if (showSpeakButton) // Botón de hablar
@@ -295,6 +295,14 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                         .values
                                                         .elementAt(indiceActividad)
                                                         .desarrollo,
+                                          desarrolloGalileo: actividades
+                                                        .values
+                                                        .elementAt(indiceActividad)
+                                                        .desarrolloGalileo,
+                                          explicacionPasos: actividades
+                                                        .values
+                                                        .elementAt(indiceActividad)
+                                                        .explicacionPasos,
                                           imagenes: actividades
                                                         .values
                                                         .elementAt(indiceActividad)
@@ -518,6 +526,8 @@ class Actividad {
   // Para pantalla de experimentos
   final List<String> introduccionGalileo;
   final List<String> desarrollo;
+  final List<String> desarrolloGalileo;
+  final List<int> explicacionPasos;
   final List<String> imagenes;
   final List<String> conclusion;
 
@@ -529,6 +539,8 @@ class Actividad {
     required this.imagenesMateriales,
     required this.introduccionGalileo,
     required this.desarrollo,
+    required this.desarrolloGalileo,
+    required this.explicacionPasos,
     required this.imagenes,
     required this.conclusion,
   });
@@ -542,6 +554,8 @@ class Actividad {
         imagenesMateriales: List<String>.from(json['imagenes_materiales']),
         introduccionGalileo: List<String>.from(json['introduccion_galileo']),
         desarrollo: List<String>.from(json['desarrollo']),
+        desarrolloGalileo: List<String>.from(json['desarrollo_galileo']),
+        explicacionPasos: List<int>.from(json['explicacion_en_pasos']),
         imagenes: List<String>.from(json['imagenes']),
         conclusion: List<String>.from(json['conclusion_galileo']));
   }
